@@ -1,13 +1,73 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Animated fading background */
+.bg-fade {
+  transition: background 0.6s cubic-bezier(.4,0,.2,1);
+  background: #fff;
+}
+.dark .bg-fade {
+  background: #000;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Body text & font */
+body {
+  color: #111;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  min-height: 100vh;
+}
+.dark body {
+  color: #fff;
+}
+
+/* Hide native cursor everywhere */
+html, body, button, a, input, textarea, select {
+  cursor: none !important;
+}
+
+/* Global transition for text/layout elements */
+body, h1, h2, h3, h4, h5, h6, p, span, div, section, nav {
+  transition:
+    color 0.3s cubic-bezier(.4,0,.2,1),
+    background 0.3s cubic-bezier(.4,0,.2,1),
+    border-color 0.3s cubic-bezier(.4,0,.2,1),
+    text-decoration-color 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+/* Clickable transitions */
+a, button, [role="button"], .clickable {
+  transition:
+    color 0.3s cubic-bezier(.4,0,.2,1),
+    background 0.3s cubic-bezier(.4,0,.2,1),
+    border-color 0.3s cubic-bezier(.4,0,.2,1),
+    text-decoration-color 0.3s cubic-bezier(.4,0,.2,1),
+    transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+a:hover, button:hover, [role="button"]:hover, .clickable:hover {
+  transform: scale(1.10);
+}
+.social-link {
+  transition:
+    color 0.2s linear,
+    background 0.2s linear,
+    border-color 0.2s linear,
+    text-decoration-color 0.2s linear,
+    transform 0.2s linear !important;
+}
+.social-link:hover {
+  transform: scale(1.10);
+}
+
+/* Box-sizing and reset */
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+* {
+  margin: 0;
+  padding: 0;
 }
