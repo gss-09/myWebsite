@@ -1,24 +1,42 @@
 import React, { useEffect, useState } from "react";
 
 const TAIL_LENGTH = 20;
-const DOT_SIZE = 8; // circle diameter
+const DOT_SIZE = 8;
+
+function isTouchDevice() {
+  return (
+    typeof window !== "undefined" &&
+    ("ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0)
+  );
+}
 
 function CustomCursor() {
+  // Always call hooks
   const [trail, setTrail] = useState(
     Array(TAIL_LENGTH).fill({ x: window.innerWidth / 2, y: window.innerHeight / 2 })
   );
   const [darkMode, setDarkMode] = useState(document.documentElement.classList.contains("dark"));
   const [ripples, setRipples] = useState([]);
+  const [hide, setHide] = useState(false);
+
+  // Check if touch device (once, after mount)
+  useEffect(() => {
+    if (isTouchDevice()) setHide(true);
+  }, []);
 
   useEffect(() => {
+    if (hide) return;
     const observer = new MutationObserver(() => {
       setDarkMode(document.documentElement.classList.contains("dark"));
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
     return () => observer.disconnect();
-  }, []);
+  }, [hide]);
 
   useEffect(() => {
+    if (hide) return;
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     document.body.style.cursor = "none";
@@ -53,10 +71,10 @@ function CustomCursor() {
       cancelAnimationFrame(animFrame);
       document.body.style.cursor = "auto";
     };
-  }, []);
+  }, [hide]);
 
-  // Ripple effect on click
   useEffect(() => {
+    if (hide) return;
     const handleClick = (e) => {
       setRipples((r) => [
         ...r,
@@ -70,18 +88,21 @@ function CustomCursor() {
     };
     window.addEventListener("mousedown", handleClick);
     return () => window.removeEventListener("mousedown", handleClick);
-  }, []);
+  }, [hide]);
 
-  // Remove old ripples
   useEffect(() => {
+    if (hide) return;
     if (!ripples.length) return;
     const timer = setInterval(() => {
       setRipples((r) => r.filter((rip) => Date.now() - rip.time < 350));
     }, 80);
     return () => clearInterval(timer);
-  }, [ripples]);
+  }, [ripples, hide]);
 
-  // Consistent black/white logic for all cursor parts:
+  // If mobile/touch, don't render
+  if (hide) return null;
+
+  // ...same rendering code as before...
   const dotBg = darkMode ? "#fff" : "#000";
   const dotBorder = darkMode ? "#000" : "#fff";
   const streakBg = darkMode ? "#fff" : "#000";
@@ -92,7 +113,6 @@ function CustomCursor() {
 
   return (
     <>
-      {/* Ripple effects */}
       {ripples.map((rip) => {
         const age = Date.now() - rip.time;
         const opacity = 1 - age / 350;
@@ -121,7 +141,6 @@ function CustomCursor() {
         );
       })}
 
-      {/* Circle main dot */}
       <div
         className="pointer-events-none fixed z-50"
         style={{
@@ -138,7 +157,6 @@ function CustomCursor() {
           position: "fixed",
         }}
       />
-      {/* Circle trailing streak */}
       {trail.slice(1).map((pos, idx) => (
         <div
           key={idx}
@@ -150,12 +168,12 @@ function CustomCursor() {
             height: `${DOT_SIZE}px`,
             borderRadius: "50%",
             background: streakBg,
-            border: `2px solid ${streakBorder}`,
-            boxShadow: streakShadow,
-            opacity: (1 - idx / TAIL_LENGTH) * 0.22,
+            border: `1px solid ${streakBorder}`,
+            opacity: 0.08 + 0.4 * (1 - idx / TAIL_LENGTH),
             pointerEvents: "none",
+            boxShadow: streakShadow,
+            filter: "blur(1px)",
             position: "fixed",
-            transition: "background 0.5s, border 0.5s, box-shadow 0.5s, opacity 0.5s",
           }}
         />
       ))}
@@ -164,4 +182,3 @@ function CustomCursor() {
 }
 
 export default CustomCursor;
-

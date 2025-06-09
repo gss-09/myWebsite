@@ -45,9 +45,14 @@ a, button, [role="button"], .clickable {
     text-decoration-color 0.3s cubic-bezier(.4,0,.2,1),
     transform 0.3s cubic-bezier(.4,0,.2,1);
 }
-a:hover, button:hover, [role="button"]:hover, .clickable:hover {
-  transform: scale(1.10);
+
+/* Only scale links/buttons on hover for desktop/tablet */
+@media (min-width: 768px) {
+  a:hover, button:hover, [role="button"]:hover, .clickable:hover {
+    transform: scale(1.10);
+  }
 }
+
 .social-link {
   transition:
     color 0.2s linear,
@@ -56,8 +61,10 @@ a:hover, button:hover, [role="button"]:hover, .clickable:hover {
     text-decoration-color 0.2s linear,
     transform 0.2s linear !important;
 }
-.social-link:hover {
-  transform: scale(1.10);
+@media (min-width: 768px) {
+  .social-link:hover {
+    transform: scale(1.10);
+  }
 }
 
 /* Box-sizing and reset */
@@ -70,4 +77,32 @@ html {
 * {
   margin: 0;
   padding: 0;
+}
+
+/* Animations for top-center dropdown menu */
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -36px) scaleY(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scaleY(1);
+  }
+}
+@keyframes dropdown-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0) scaleY(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -36px) scaleY(0.95);
+  }
+}
+.dropdown-anim-in {
+  animation: dropdown-in 0.3s cubic-bezier(.4,0,.2,1) forwards;
+}
+.dropdown-anim-out {
+  animation: dropdown-out 0.3s cubic-bezier(.4,0,.2,1) forwards;
 }

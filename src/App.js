@@ -35,14 +35,17 @@ function App() {
     <>
       <CustomCursor />
       <div className="bg-fade fixed inset-0 -z-10"></div>
-       <ParticlesBg />
+      <ParticlesBg />
       <Navbar />
+      {/* Spacer for fixed navbar height */}
+      <div className="h-20 md:h-24"></div>
       <AnimatedRoutes />
     </>
   );
 }
 
 export default App;
+
 
 
 
