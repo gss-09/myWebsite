@@ -13,7 +13,6 @@ function isTouchDevice() {
 }
 
 function CustomCursor() {
-  // Always call hooks
   const [trail, setTrail] = useState(
     Array(TAIL_LENGTH).fill({ x: window.innerWidth / 2, y: window.innerHeight / 2 })
   );
@@ -21,7 +20,6 @@ function CustomCursor() {
   const [ripples, setRipples] = useState([]);
   const [hide, setHide] = useState(false);
 
-  // Check if touch device (once, after mount)
   useEffect(() => {
     if (isTouchDevice()) setHide(true);
   }, []);
@@ -99,10 +97,8 @@ function CustomCursor() {
     return () => clearInterval(timer);
   }, [ripples, hide]);
 
-  // If mobile/touch, don't render
   if (hide) return null;
 
-  // ...same rendering code as before...
   const dotBg = darkMode ? "#fff" : "#000";
   const dotBorder = darkMode ? "#000" : "#fff";
   const streakBg = darkMode ? "#fff" : "#000";
@@ -133,7 +129,7 @@ function CustomCursor() {
               borderRadius: "50%",
               opacity,
               pointerEvents: "none",
-              zIndex: 10000,
+              zIndex: 70, // Always above everything else
               filter: "blur(2px)",
               transition: "opacity 0.5s",
             }}
@@ -141,8 +137,9 @@ function CustomCursor() {
         );
       })}
 
+      {/* Main cursor */}
       <div
-        className="pointer-events-none fixed z-50"
+        className="pointer-events-none fixed z-[60]"
         style={{
           left: trail[0].x - DOT_SIZE / 2,
           top: trail[0].y - DOT_SIZE / 2,
@@ -157,10 +154,11 @@ function CustomCursor() {
           position: "fixed",
         }}
       />
+      {/* Trail */}
       {trail.slice(1).map((pos, idx) => (
         <div
           key={idx}
-          className="pointer-events-none fixed z-40"
+          className="pointer-events-none fixed z-[55]"
           style={{
             left: pos.x - DOT_SIZE / 2,
             top: pos.y - DOT_SIZE / 2,

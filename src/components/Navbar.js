@@ -63,10 +63,10 @@ function Navbar() {
           Shriyan Sai
         </Link>
         <div className="hidden md:flex flex-1 justify-center items-center space-x-8">
-          <Link to="/" className="no-underline transition-all duration-200 hover:scale-110 hover:text-blue-600">Home</Link>
-          <Link to="/about" className="no-underline transition-all duration-200 hover:scale-110 hover:text-blue-600">About</Link>
-          <Link to="/projects" className="no-underline transition-all duration-200 hover:scale-110 hover:text-blue-600">Projects</Link>
-          <Link to="/contact" className="no-underline transition-all duration-200 hover:scale-110 hover:text-blue-600">Contact</Link>
+          <Link to="/" className="no-underline transition-all duration-200 hover:scale-110">Home</Link>
+          <Link to="/about" className="no-underline transition-all duration-200 hover:scale-110">About</Link>
+          <Link to="/projects" className="no-underline transition-all duration-200 hover:scale-110">Projects</Link>
+          <Link to="/contact" className="no-underline transition-all duration-200 hover:scale-110">Contact</Link>
         </div>
         {/* Desktop: Toggle always right */}
         <div className="hidden md:flex items-center ml-6">
