@@ -59,7 +59,7 @@ function Navbar() {
           boxSizing: "border-box",
         }}
       >
-        <Link to="/" className="text-xl font-bold flex-shrink-0">
+        <Link to="/" className="text-xl font-bold flex-shrink-0 transition-transform duration-200 hover:scale-110">
           Shriyan Sai
         </Link>
         <div className="hidden md:flex flex-1 justify-center items-center space-x-8">
