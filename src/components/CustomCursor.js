@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const TAIL_LENGTH = 20;
+const TAIL_LENGTH = 10;
 const DOT_SIZE = 8;
 
 function isTouchDevice() {

@@ -6,13 +6,13 @@ function Contact() {
         <div className="flex flex-col gap-3 sm:gap-4 items-center">
           <a
             href="mailto:shriyansai73@gmail.com"
-            className="social-link"
+            className="social-link transition-transform duration-200 hover:scale-110"
           >
             Email
           </a>
           <a
             href="https://www.linkedin.com/in/shriyans-sai/"
-            className="social-link"
+            className="social-link transition-transform duration-200 hover:scale-110"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -20,7 +20,7 @@ function Contact() {
           </a>
           <a
             href="https://www.instagram.com/shriyans_sai09/"
-            className="social-link"
+            className="social-link transition-transform duration-200 hover:scale-110"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -28,7 +28,7 @@ function Contact() {
           </a>
           <a
             href="https://github.com/gss-09"
-            className="social-link"
+            className="social-link transition-transform duration-200 hover:scale-110"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -40,4 +40,3 @@ function Contact() {
   );
 }
 export default Contact;
-
