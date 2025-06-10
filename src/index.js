@@ -1,9 +1,13 @@
+// Add dark mode class to <html> before anything else runs
+
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+document.documentElement.classList.add("dark");
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,5 +18,4 @@ root.render(
   </React.StrictMode>
 );
 
-// CRA stuff, optional:
 reportWebVitals();

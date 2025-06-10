@@ -1,3 +1,4 @@
+// src/components/Home.js
 function Home() {
   return (
     <section className="py-10 px-2 sm:py-16 sm:px-4 text-center transition-colors duration-500">
@@ -11,5 +12,4 @@ function Home() {
   );
 }
 export default Home;
-
 

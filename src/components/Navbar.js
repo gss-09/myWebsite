@@ -1,3 +1,4 @@
+// src/components/Navbar.js
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
@@ -9,7 +10,7 @@ function Navbar() {
   const closeTimeout = useRef();
 
   const isMenuVisible = open || animating;
-  const NAV_HEIGHT_MOBILE = 80; // matches h-20 in your App.js spacer
+  const NAV_HEIGHT_MOBILE = 80;
 
   useEffect(() => {
     if (isMenuVisible) {
@@ -52,25 +53,26 @@ function Navbar() {
     <>
       <nav
         className="fixed top-4 left-1/2 transform -translate-x-1/2 w-[92vw]
-          flex items-center px-4 sm:px-8 py-4
+          flex items-center justify-between px-4 sm:px-8 py-4
           shadow-lg dark:[box-shadow:0_0_24px_2px_rgb(255,255,255,0.14)]
           z-40 bg-white/50 dark:bg-black/40 backdrop-blur-lg rounded-2xl transition"
         style={{
           boxSizing: "border-box",
         }}
       >
+        {/* Logo left */}
         <Link to="/" className="text-xl font-bold flex-shrink-0 transition-transform duration-200 hover:scale-110">
           Shriyan Sai
         </Link>
-        <div className="hidden md:flex flex-1 justify-center items-center space-x-8">
+        {/* Links and toggle right (desktop only) */}
+        <div className="hidden md:flex flex-1 justify-end items-center space-x-8">
           <Link to="/" className="no-underline transition-all duration-200 hover:scale-110">Home</Link>
           <Link to="/about" className="no-underline transition-all duration-200 hover:scale-110">About</Link>
           <Link to="/projects" className="no-underline transition-all duration-200 hover:scale-110">Projects</Link>
           <Link to="/contact" className="no-underline transition-all duration-200 hover:scale-110">Contact</Link>
-        </div>
-        {/* Desktop: Toggle always right */}
-        <div className="hidden md:flex items-center ml-6">
-          <DarkModeToggle />
+          <div className="ml-6">
+            <DarkModeToggle />
+          </div>
         </div>
         {/* Mobile: Toggle to the left of hamburger */}
         <div className="flex items-center md:hidden ml-auto">
@@ -104,7 +106,7 @@ function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile: Drop-down menu just below navbar */}
+      {/* Mobile: Drop-down menu */}
       {isMenuVisible && (
         <div
           className={`fixed left-1/2 z-40
@@ -152,4 +154,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
