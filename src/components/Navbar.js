@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
+import logo from './logo.png';
 
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -62,7 +63,7 @@ function Navbar() {
       >
         {/* Logo left */}
         <Link to="/" className="text-xl font-bold flex-shrink-0 transition-transform duration-200 hover:scale-110">
-          Shriyan Sai
+          <img src={logo} alt="Shriyan Sai logo" className="h-8 w-auto" />
         </Link>
         {/* Links and toggle right (desktop only) */}
         <div className="hidden md:flex flex-1 justify-end items-center space-x-8">
@@ -91,15 +92,15 @@ function Navbar() {
             style={{ position: "relative" }}
           >
             <span
-              className={`block w-6 h-0.5 mb-1 rounded transition-all duration-300 
+              className={`block w-6 h-0.5 mb-1 rounded transition-all duration-300
               ${open ? "rotate-45 translate-y-2 bg-gray-600 dark:bg-gray-100" : "bg-black dark:bg-white"}`}
             ></span>
             <span
-              className={`block w-6 h-0.5 mb-1 rounded transition-all duration-300 
+              className={`block w-6 h-0.5 mb-1 rounded transition-all duration-300
               ${open ? "opacity-0" : "bg-black dark:bg-white"}`}
             ></span>
             <span
-              className={`block w-6 h-0.5 rounded transition-all duration-300 
+              className={`block w-6 h-0.5 rounded transition-all duration-300
               ${open ? "-rotate-45 -translate-y-2 bg-gray-600 dark:bg-gray-100" : "bg-black dark:bg-white"}`}
             ></span>
           </button>
@@ -110,7 +111,7 @@ function Navbar() {
       {isMenuVisible && (
         <div
           className={`fixed left-1/2 z-40
-            bg-white/50 dark:bg-black/40 shadow-2xl dark:[box-shadow:0_0_24px_2px_rgb(255,255,255,0.14)] 
+            bg-white/50 dark:bg-black/40 shadow-2xl dark:[box-shadow:0_0_24px_2px_rgb(255,255,255,0.14)]
             backdrop-blur-lg rounded-2xl px-4 py-8 w-11/12 max-w-none
             flex flex-col items-center gap-4
             ${animating ? "dropdown-anim-out" : "dropdown-anim-in"}`}
