@@ -63,8 +63,13 @@ function Navbar() {
       >
         {/* Logo left */}
         <Link to="/" className="text-xl font-bold flex-shrink-0 transition-transform duration-200 hover:scale-110">
-          <img src={logo} alt="Shriyan Sai logo" className="h-8 w-auto" />
+          <img
+            src={logo}
+            alt="Shriyan Sai logo"
+            className="h-12 w-12 object-cover rounded-full"
+          />
         </Link>
+
         {/* Links and toggle right (desktop only) */}
         <div className="hidden md:flex flex-1 justify-end items-center space-x-8">
           <Link to="/" className="no-underline transition-all duration-200 hover:scale-110">Home</Link>
