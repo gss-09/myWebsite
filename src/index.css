@@ -23,7 +23,7 @@ body {
 }
 
 /* Hide native cursor everywhere */
-html, body, button, a, input, textarea, select {
+*, *::before, *::after {
   cursor: none !important;
 }
 
