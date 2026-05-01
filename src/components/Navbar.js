@@ -3,9 +3,10 @@ import DarkModeToggle from "./DarkModeToggle";
 import logo from './logo.png';
 
 const NAV_LINKS = [
-  { label: "Home",     id: "home",     href: "#home"     },
-  { label: "Projects", id: "projects", href: "#projects" },
-  { label: "Contact",  id: "contact",  href: "#contact"  },
+  { label: "Home",       id: "home",       href: "#home"       },
+  { label: "Experience", id: "experience", href: "#experience" },
+  { label: "Projects",   id: "projects",   href: "#projects"   },
+  { label: "Contact",    id: "contact",    href: "#contact"    },
 ];
 
 function Navbar() {

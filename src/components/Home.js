@@ -30,11 +30,8 @@ function Home() {
           <h2 className="text-xl sm:text-2xl font-bold mb-4 border-b border-gray-300 dark:border-gray-600 pb-2">About Me</h2>
           <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
             I'm a junior studying Computer Science at the University of Houston with a focus on AI and machine learning.
-            I enjoy building everything from full-stack web apps to data science pipelines.
-          </p>
-          <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed mt-4">
-            I'm currently doing research under Prof. Sen Lin, adapting <span className="font-semibold">DreamerV3</span> &mdash; a world-model
-            reinforcement learning architecture &mdash; to time series forecasting problems and benchmarking it against traditional time series models.
+            I enjoy building everything from full-stack web apps to data science pipelines, and I'm currently doing
+            undergraduate research on adapting world-model architectures for time series prediction.
           </p>
         </div>
 
