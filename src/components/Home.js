@@ -44,7 +44,7 @@ function Home() {
             onMouseLeave={() => window.dispatchEvent(new Event("cursorshow"))}
           >
             <iframe
-              src="/resume.pdf"
+              src="/resume.pdf?v=2"
               title="Shriyans Sai Resume"
               className="w-full"
               style={{ height: "780px" }}
@@ -52,7 +52,7 @@ function Home() {
           </div>
           <div className="mt-4 text-center">
             <a
-              href="/resume.pdf"
+              href="/resume.pdf?v=2"
               download
               className="inline-block px-6 py-2 rounded-lg font-semibold
                 bg-black text-white dark:bg-white dark:text-black
