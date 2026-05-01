@@ -32,23 +32,46 @@ function Navbar() {
     };
   }, []);
 
-  // Active section observer
+  // Active section detection (scroll-based — handles short last section)
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
-      },
-      { rootMargin: "-45% 0px -45% 0px" }
-    );
+    let ticking = false;
+    const update = () => {
+      const offset = 140; // navbar height + buffer
+      let active = NAV_LINKS[0].id;
 
-    NAV_LINKS.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+      // If scrolled near the bottom, force the last section active
+      const nearBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 60;
 
-    return () => observer.disconnect();
+      if (nearBottom) {
+        active = NAV_LINKS[NAV_LINKS.length - 1].id;
+      } else {
+        for (const { id } of NAV_LINKS) {
+          const el = document.getElementById(id);
+          if (!el) continue;
+          if (el.getBoundingClientRect().top - offset <= 0) active = id;
+        }
+      }
+
+      setActiveSection(active);
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   function handleClose() {
