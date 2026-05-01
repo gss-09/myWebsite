@@ -14,6 +14,7 @@ function App() {
       <div className="bg-fade fixed inset-0 -z-10"></div>
       <ParticlesBg />
       <Navbar />
+      <div className="h-24 md:h-28"></div>
       <main>
         <div id="home" className="scroll-section"><Home /></div>
         <div id="projects" className="scroll-section"><Projects /></div>
