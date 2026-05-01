@@ -47,10 +47,15 @@ function CustomCursor() {
     const onLeave = () => setVisible(false);
     const onEnter = () => setVisible(true);
 
+    const onIframeEnter = () => setVisible(false);
+    const onIframeLeave = () => setVisible(true);
+
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseover", onOver);
     window.addEventListener("mousedown", onDown);
     window.addEventListener("mouseup", onUp);
+    window.addEventListener("cursorhide", onIframeEnter);
+    window.addEventListener("cursorshow", onIframeLeave);
     document.documentElement.addEventListener("mouseleave", onLeave);
     document.documentElement.addEventListener("mouseenter", onEnter);
 
@@ -70,6 +75,8 @@ function CustomCursor() {
       window.removeEventListener("mouseover", onOver);
       window.removeEventListener("mousedown", onDown);
       window.removeEventListener("mouseup", onUp);
+      window.removeEventListener("cursorhide", onIframeEnter);
+      window.removeEventListener("cursorshow", onIframeLeave);
       document.documentElement.removeEventListener("mouseleave", onLeave);
       document.documentElement.removeEventListener("mouseenter", onEnter);
       cancelAnimationFrame(rafRef.current);
@@ -86,7 +93,7 @@ function CustomCursor() {
 
   if (isTouch || !visible) return null;
 
-  const ringSize = isHover ? 56 : isDown ? 20 : 38;
+  const ringSize = isHover ? 44 : isDown ? 16 : 28;
   const dotSize = isHover ? 4 : isDown ? 3 : 6;
 
   const base = {
