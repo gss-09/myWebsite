@@ -3,14 +3,15 @@ import DarkModeToggle from "./DarkModeToggle";
 import logo from './logo.png';
 
 const NAV_LINKS = [
-  { label: "Home",     href: "#home"     },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact",  href: "#contact"  },
+  { label: "Home",     id: "home",     href: "#home"     },
+  { label: "Projects", id: "projects", href: "#projects" },
+  { label: "Contact",  id: "contact",  href: "#contact"  },
 ];
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [animating, setAnimating] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const closeTimeout = useRef();
 
   const isMenuVisible = open || animating;
@@ -29,6 +30,25 @@ function Navbar() {
     return () => {
       if (closeTimeout.current) clearTimeout(closeTimeout.current);
     };
+  }, []);
+
+  // Active section observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -45% 0px" }
+    );
+
+    NAV_LINKS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   function handleClose() {
@@ -60,15 +80,27 @@ function Navbar() {
 
         {/* Desktop links */}
         <div className="hidden md:flex flex-1 justify-end items-center space-x-8">
-          {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              className="no-underline transition-all duration-200 hover:scale-110"
-            >
-              {label}
-            </a>
-          ))}
+          {NAV_LINKS.map(({ label, id, href }) => {
+            const isActive = activeSection === id;
+            return (
+              <a
+                key={label}
+                href={href}
+                className={`relative no-underline transition-all duration-200 hover:scale-110
+                  ${isActive ? "font-semibold" : ""}`}
+              >
+                {label}
+                <span
+                  className={`absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full
+                    bg-black dark:bg-white transition-opacity duration-300
+                    ${isActive ? "opacity-100" : "opacity-0"}`}
+                  style={{
+                    boxShadow: isActive ? "0 0 8px currentColor" : "none",
+                  }}
+                />
+              </a>
+            );
+          })}
           <div className="ml-6">
             <DarkModeToggle />
           </div>
@@ -102,18 +134,21 @@ function Navbar() {
             ${animating ? "dropdown-anim-out" : "dropdown-anim-in"}`}
           style={{ top: `calc(${NAV_HEIGHT_MOBILE}px + 1rem)`, transform: "translate(-50%, 0)" }}
         >
-          {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              onClick={handleClose}
-              className="inline-block text-center py-2 px-4 no-underline
-                transition-transform duration-200 hover:scale-110 active:scale-110
-                origin-center text-lg font-semibold"
-            >
-              {label}
-            </a>
-          ))}
+          {NAV_LINKS.map(({ label, id, href }) => {
+            const isActive = activeSection === id;
+            return (
+              <a
+                key={label}
+                href={href}
+                onClick={handleClose}
+                className={`inline-block text-center py-2 px-4 no-underline
+                  transition-transform duration-200 hover:scale-110 active:scale-110
+                  origin-center text-lg ${isActive ? "font-bold" : "font-semibold"}`}
+              >
+                {label}
+              </a>
+            );
+          })}
         </div>
       )}
     </>

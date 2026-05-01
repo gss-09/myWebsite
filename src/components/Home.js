@@ -13,7 +13,12 @@ function Home() {
             className="w-36 h-48 sm:w-44 sm:h-56 rounded-2xl object-cover shadow-lg border border-gray-200 dark:border-gray-700 flex-shrink-0"
           />
           <div className="text-center sm:text-left">
-            <h1 className="text-3xl sm:text-5xl font-extrabold mb-4">Hi, I'm Shriyan Sai</h1>
+            <h1 className="text-3xl sm:text-5xl font-extrabold mb-4">
+              Hi, I'm{" "}
+              <span className="bg-gradient-to-r from-sky-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Shriyan Sai
+              </span>
+            </h1>
             <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
               CS Junior at the University of Houston &mdash; building things at the intersection of AI, machine learning, and software engineering.
             </p>

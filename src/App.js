@@ -5,6 +5,7 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import CustomCursor from "./components/CustomCursor";
 import ParticlesBg from "./components/ParticlesBg";
+import FadeIn from "./components/FadeIn";
 import "./index.css";
 
 function App() {
@@ -16,9 +17,9 @@ function App() {
       <Navbar />
       <div className="h-24 md:h-28"></div>
       <main>
-        <div id="home" className="scroll-section"><Home /></div>
-        <div id="projects" className="scroll-section"><Projects /></div>
-        <div id="contact" className="scroll-section"><Contact /></div>
+        <div id="home" className="scroll-section"><FadeIn><Home /></FadeIn></div>
+        <div id="projects" className="scroll-section"><FadeIn><Projects /></FadeIn></div>
+        <div id="contact" className="scroll-section"><FadeIn><Contact /></FadeIn></div>
       </main>
     </>
   );
