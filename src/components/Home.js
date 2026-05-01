@@ -6,11 +6,18 @@ function Home() {
       <div className="max-w-md sm:max-w-xl md:max-w-2xl mx-auto">
 
         {/* Hero */}
-        <div className="text-center mb-14">
-          <h1 className="text-3xl sm:text-5xl font-extrabold mb-4">Hi, I'm Shriyan Sai</h1>
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-            CS Junior at the University of Houston &mdash; building things at the intersection of AI, machine learning, and software engineering.
-          </p>
+        <div className="flex flex-col items-center text-center mb-14 gap-6">
+          <img
+            src="/photo.jpg"
+            alt="Shriyan Sai"
+            className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover shadow-lg border-2 border-gray-300 dark:border-gray-600"
+          />
+          <div>
+            <h1 className="text-3xl sm:text-5xl font-extrabold mb-4">Hi, I'm Shriyan Sai</h1>
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
+              CS Junior at the University of Houston &mdash; building things at the intersection of AI, machine learning, and software engineering.
+            </p>
+          </div>
         </div>
 
         {/* About */}
