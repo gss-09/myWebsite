@@ -70,6 +70,11 @@ a, button, [role="button"], .clickable {
 /* Box-sizing and reset */
 html {
   box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+.scroll-section {
+  scroll-margin-top: 6rem;
 }
 *, *::before, *::after {
   box-sizing: inherit;

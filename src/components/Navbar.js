@@ -1,13 +1,16 @@
-// src/components/Navbar.js
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
 import logo from './logo.png';
+
+const NAV_LINKS = [
+  { label: "Home",     href: "#home"     },
+  { label: "Projects", href: "#projects" },
+  { label: "Contact",  href: "#contact"  },
+];
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [animating, setAnimating] = useState(false);
-  const location = useLocation();
   const closeTimeout = useRef();
 
   const isMenuVisible = open || animating;
@@ -19,15 +22,8 @@ function Navbar() {
     } else {
       document.body.classList.remove("overflow-hidden");
     }
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-    };
+    return () => document.body.classList.remove("overflow-hidden");
   }, [isMenuVisible]);
-
-  useEffect(() => {
-    handleClose();
-    // eslint-disable-next-line
-  }, [location.pathname]);
 
   useEffect(() => {
     return () => {
@@ -39,9 +35,7 @@ function Navbar() {
     if (open) {
       setAnimating(true);
       setOpen(false);
-      closeTimeout.current = setTimeout(() => {
-        setAnimating(false);
-      }, 300);
+      closeTimeout.current = setTimeout(() => setAnimating(false), 300);
     }
   }
 
@@ -57,94 +51,69 @@ function Navbar() {
           flex items-center justify-between px-4 sm:px-8 py-4
           shadow-lg dark:[box-shadow:0_0_24px_2px_rgb(255,255,255,0.14)]
           z-40 bg-white/50 dark:bg-black/40 backdrop-blur-lg rounded-2xl transition"
-        style={{
-          boxSizing: "border-box",
-        }}
+        style={{ boxSizing: "border-box" }}
       >
-        {/* Logo left */}
-        <Link to="/" className="text-xl font-bold flex-shrink-0 transition-transform duration-200 hover:scale-110">
-          <img
-            src={logo}
-            alt="Shriyan Sai logo"
-            className="h-12 w-12 object-cover rounded-full"
-          />
-        </Link>
+        {/* Logo */}
+        <a href="#home" className="text-xl font-bold flex-shrink-0 transition-transform duration-200 hover:scale-110">
+          <img src={logo} alt="Shriyan Sai logo" className="h-12 w-12 object-cover rounded-full" />
+        </a>
 
-        {/* Links and toggle right (desktop only) */}
+        {/* Desktop links */}
         <div className="hidden md:flex flex-1 justify-end items-center space-x-8">
-          <Link to="/" className="no-underline transition-all duration-200 hover:scale-110">Home</Link>
-          <Link to="/projects" className="no-underline transition-all duration-200 hover:scale-110">Projects</Link>
-          <Link to="/contact" className="no-underline transition-all duration-200 hover:scale-110">Contact</Link>
+          {NAV_LINKS.map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              className="no-underline transition-all duration-200 hover:scale-110"
+            >
+              {label}
+            </a>
+          ))}
           <div className="ml-6">
             <DarkModeToggle />
           </div>
         </div>
-        {/* Mobile: Toggle to the left of hamburger */}
+
+        {/* Mobile: toggle + hamburger */}
         <div className="flex items-center md:hidden ml-auto">
           <DarkModeToggle />
           <button
             className="ml-2 flex flex-col justify-center items-center w-10 h-10 p-2 z-50"
-            onClick={() => {
-              if (open) {
-                handleClose();
-              } else {
-                handleOpen();
-              }
-            }}
+            onClick={() => open ? handleClose() : handleOpen()}
             aria-label={open ? "Close menu" : "Open menu"}
-            tabIndex={0}
-            style={{ position: "relative" }}
           >
-            <span
-              className={`block w-6 h-0.5 mb-1 rounded transition-all duration-300
-              ${open ? "rotate-45 translate-y-2 bg-gray-600 dark:bg-gray-100" : "bg-black dark:bg-white"}`}
-            ></span>
-            <span
-              className={`block w-6 h-0.5 mb-1 rounded transition-all duration-300
-              ${open ? "opacity-0" : "bg-black dark:bg-white"}`}
-            ></span>
-            <span
-              className={`block w-6 h-0.5 rounded transition-all duration-300
-              ${open ? "-rotate-45 -translate-y-2 bg-gray-600 dark:bg-gray-100" : "bg-black dark:bg-white"}`}
-            ></span>
+            <span className={`block w-6 h-0.5 mb-1 rounded transition-all duration-300
+              ${open ? "rotate-45 translate-y-2 bg-gray-600 dark:bg-gray-100" : "bg-black dark:bg-white"}`} />
+            <span className={`block w-6 h-0.5 mb-1 rounded transition-all duration-300
+              ${open ? "opacity-0" : "bg-black dark:bg-white"}`} />
+            <span className={`block w-6 h-0.5 rounded transition-all duration-300
+              ${open ? "-rotate-45 -translate-y-2 bg-gray-600 dark:bg-gray-100" : "bg-black dark:bg-white"}`} />
           </button>
         </div>
       </nav>
 
-      {/* Mobile: Drop-down menu */}
+      {/* Mobile dropdown */}
       {isMenuVisible && (
         <div
           className={`fixed left-1/2 z-40
             bg-white/50 dark:bg-black/40 shadow-2xl dark:[box-shadow:0_0_24px_2px_rgb(255,255,255,0.14)]
-            backdrop-blur-lg rounded-2xl px-4 py-8 w-11/12 max-w-none
+            backdrop-blur-lg rounded-2xl px-4 py-8 w-11/12
             flex flex-col items-center gap-4
             ${animating ? "dropdown-anim-out" : "dropdown-anim-in"}`}
-          style={{
-            top: `calc(${NAV_HEIGHT_MOBILE}px + 1rem)`,
-            transform: "translate(-50%, 0)",
-          }}
+          style={{ top: `calc(${NAV_HEIGHT_MOBILE}px + 1rem)`, transform: "translate(-50%, 0)" }}
         >
-          <Link
-            to="/"
-            className="inline-block text-center py-2 px-4 no-underline transition-transform duration-200 hover:scale-110 active:scale-110 origin-center text-lg font-semibold"
-            onClick={handleClose}
-          >
-            Home
-          </Link>
-          <Link
-            to="/projects"
-            className="inline-block text-center py-2 px-4 no-underline transition-transform duration-200 hover:scale-110 active:scale-110 origin-center text-lg font-semibold"
-            onClick={handleClose}
-          >
-            Projects
-          </Link>
-          <Link
-            to="/contact"
-            className="inline-block text-center py-2 px-4 no-underline transition-transform duration-200 hover:scale-110 active:scale-110 origin-center text-lg font-semibold"
-            onClick={handleClose}
-          >
-            Contact
-          </Link>
+          {NAV_LINKS.map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              onClick={handleClose}
+              className="inline-block text-center py-2 px-4 no-underline
+                transition-transform duration-200 hover:scale-110 active:scale-110
+                origin-center text-lg font-semibold"
+            >
+              {label}
+            </a>
+          ))}
         </div>
       )}
     </>
