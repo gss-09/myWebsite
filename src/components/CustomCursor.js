@@ -25,6 +25,15 @@ function CustomCursor() {
     if (isTouch) return;
 
     const onMove = (e) => {
+      // Hide custom cursor when mouse is over the scrollbar gutter
+      // (clientWidth excludes scrollbar; clientHeight excludes horizontal scrollbar)
+      const overScrollbar =
+        e.clientX > document.documentElement.clientWidth ||
+        e.clientY > document.documentElement.clientHeight;
+      if (overScrollbar) {
+        setVisible(false);
+        return;
+      }
       mouseRef.current = { x: e.clientX, y: e.clientY };
       setPos({ x: e.clientX, y: e.clientY });
       setVisible(true);
