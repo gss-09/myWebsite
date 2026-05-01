@@ -75,7 +75,7 @@ function Navbar() {
       >
         {/* Logo */}
         <a href="#home" className="text-xl font-bold flex-shrink-0 transition-transform duration-200 hover:scale-110">
-          <img src={logo} alt="Shriyan Sai logo" className="h-12 w-12 object-cover rounded-full" />
+          <img src={logo} alt="Shriyans Sai logo" className="h-12 w-12 object-cover rounded-full" />
         </a>
 
         {/* Desktop links */}
