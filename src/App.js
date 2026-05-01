@@ -4,7 +4,6 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-import About from "./components/About";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import CustomCursor from "./components/CustomCursor";
@@ -19,7 +18,6 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<AnimatedPage><Home /></AnimatedPage>} />
-        <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
         <Route path="/projects" element={<AnimatedPage><Projects /></AnimatedPage>} />
         <Route path="/contact" element={<AnimatedPage><Contact /></AnimatedPage>} />
         {/* Only add Resume if you have it */}

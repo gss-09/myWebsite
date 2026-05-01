@@ -73,7 +73,6 @@ function Navbar() {
         {/* Links and toggle right (desktop only) */}
         <div className="hidden md:flex flex-1 justify-end items-center space-x-8">
           <Link to="/" className="no-underline transition-all duration-200 hover:scale-110">Home</Link>
-          <Link to="/about" className="no-underline transition-all duration-200 hover:scale-110">About</Link>
           <Link to="/projects" className="no-underline transition-all duration-200 hover:scale-110">Projects</Link>
           <Link to="/contact" className="no-underline transition-all duration-200 hover:scale-110">Contact</Link>
           <div className="ml-6">
@@ -131,13 +130,6 @@ function Navbar() {
             onClick={handleClose}
           >
             Home
-          </Link>
-          <Link
-            to="/about"
-            className="inline-block text-center py-2 px-4 no-underline transition-transform duration-200 hover:scale-110 active:scale-110 origin-center text-lg font-semibold"
-            onClick={handleClose}
-          >
-            About
           </Link>
           <Link
             to="/projects"
