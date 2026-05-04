@@ -1,4 +1,5 @@
 import React from "react";
+import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Experience from "./components/Experience";
@@ -23,6 +24,7 @@ function App() {
         <div id="projects" className="scroll-section"><FadeIn><Projects /></FadeIn></div>
         <div id="contact" className="scroll-section"><FadeIn><Contact /></FadeIn></div>
       </main>
+      <Analytics />
     </>
   );
 }
