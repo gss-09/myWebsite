@@ -141,6 +141,64 @@ html {
   padding: 0;
 }
 
+/* ---------- Aurora background blobs ---------- */
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.35;
+  will-change: transform;
+}
+.dark .aurora-blob {
+  opacity: 0.28;
+}
+.aurora-blob-1 {
+  width: 520px;
+  height: 520px;
+  top: -120px;
+  left: -120px;
+  background: radial-gradient(circle, #38bdf8 0%, transparent 70%);
+  animation: aurora-float-1 22s ease-in-out infinite;
+}
+.aurora-blob-2 {
+  width: 480px;
+  height: 480px;
+  top: 30%;
+  right: -140px;
+  background: radial-gradient(circle, #a855f7 0%, transparent 70%);
+  animation: aurora-float-2 26s ease-in-out infinite;
+}
+.aurora-blob-3 {
+  width: 440px;
+  height: 440px;
+  bottom: -120px;
+  left: 30%;
+  background: radial-gradient(circle, #f472b6 0%, transparent 70%);
+  animation: aurora-float-3 30s ease-in-out infinite;
+}
+@keyframes aurora-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(80px, 60px) scale(1.1); }
+}
+@keyframes aurora-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-60px, 40px) scale(1.15); }
+}
+@keyframes aurora-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(40px, -50px) scale(1.1); }
+}
+
+/* ---------- Skills marquee ---------- */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-rev {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
 /* ---------- Mobile dropdown animations ---------- */
 @keyframes dropdown-in {
   from { opacity: 0; transform: translate(-50%, -36px) scaleY(0.95); }

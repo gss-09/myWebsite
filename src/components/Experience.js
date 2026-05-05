@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import SectionHeading from "./SectionHeading";
 
 const TYPE_STYLES = {
   Research: {
@@ -69,10 +70,11 @@ export default function Experience() {
   return (
     <section className="py-10 px-2 sm:py-16 sm:px-4 transition-colors duration-500">
       <div className="max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-center">Experience</h2>
-        <p className="text-center text-gray-600 dark:text-gray-400 mb-8 text-sm sm:text-base">
-          Filter by category, click any card to expand.
-        </p>
+        <SectionHeading
+          index={1}
+          title="Experience"
+          subtitle="Filter by category, click any card to expand."
+        />
 
         {/* Filter pills */}
         <div className="flex flex-wrap justify-center gap-2 mb-10">

@@ -1,4 +1,6 @@
 import React from "react";
+import RotatingTitle from "./RotatingTitle";
+import SkillsMarquee from "./SkillsMarquee";
 
 function Home() {
   return (
@@ -6,28 +8,46 @@ function Home() {
       <div className="max-w-md sm:max-w-xl md:max-w-2xl mx-auto">
 
         {/* Hero */}
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-8 mb-14">
-          <img
-            src="/photo.jpg"
-            alt="Shriyans Sai"
-            className="w-36 h-48 sm:w-44 sm:h-56 rounded-2xl object-cover shadow-lg border border-gray-200 dark:border-gray-700 flex-shrink-0"
-          />
-          <div className="text-center sm:text-left">
-            <h1 className="text-3xl sm:text-5xl font-extrabold mb-4">
-              Hi, I'm{" "}
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-8 mb-12">
+          <div className="relative flex-shrink-0">
+            <div
+              aria-hidden
+              className="absolute -inset-1.5 rounded-2xl opacity-60 blur-xl
+                bg-gradient-to-tr from-sky-400 via-purple-400 to-pink-400"
+            />
+            <img
+              src="/photo.jpg"
+              alt="Shriyans Sai"
+              className="relative w-36 h-48 sm:w-44 sm:h-56 rounded-2xl object-cover shadow-lg border border-gray-200 dark:border-gray-700"
+            />
+          </div>
+          <div className="text-center sm:text-left flex-1">
+            <div className="text-xs font-mono tracking-[0.25em] uppercase text-gray-500 dark:text-gray-400 mb-2">
+              Hello world
+            </div>
+            <h1 className="text-3xl sm:text-5xl font-extrabold mb-3 leading-tight">
+              I'm{" "}
               <span className="bg-gradient-to-r from-sky-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Shriyans Sai
               </span>
             </h1>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
+            <div className="text-lg sm:text-2xl mb-4 min-h-[1.8em]">
+              <RotatingTitle />
+            </div>
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
               CS Junior at the University of Houston &mdash; building things at the intersection of AI, machine learning, and software engineering.
             </p>
           </div>
         </div>
 
+        {/* Skills marquee */}
+        <div className="mb-14">
+          <SkillsMarquee />
+        </div>
+
         {/* About */}
         <div className="mb-14">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 border-b border-gray-300 dark:border-gray-600 pb-2">About Me</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 border-b border-gray-300 dark:border-gray-600 pb-2">About</h2>
           <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
             I'm a junior studying Computer Science at the University of Houston with a focus on AI and machine learning.
             I enjoy building everything from full-stack web apps to data science pipelines, and I'm currently doing

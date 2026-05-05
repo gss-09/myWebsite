@@ -35,23 +35,23 @@ function ParticlesBg() {
         fpsLimit: 90,
         fullScreen: false,
         particles: {
-          number: { value: 80, density: { enable: true, value_area: 1000 } },
+          number: { value: 55, density: { enable: true, value_area: 1100 } },
           color: { value: isDark ? "#fff" : "#000" },
           links: {
             enable: true,
             color: isDark ? "#fff" : "#000",
-            opacity: 0.4, // faint lines!
-            width: 1.2,
-            distance: 120,
+            opacity: 0.22,
+            width: 1,
+            distance: 140,
           },
           move: {
             enable: true,
-            speed: 2,
+            speed: 1.2,
             direction: "none",
             outModes: "bounce",
           },
-          opacity: { value: 0.55 },
-          size: { value: 4, random: true },
+          opacity: { value: 0.35 },
+          size: { value: 3, random: true },
         },
         interactivity: {
           events: {

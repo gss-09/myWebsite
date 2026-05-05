@@ -1,4 +1,5 @@
 import React from "react";
+import SectionHeading from "./SectionHeading";
 
 const email = {
   name: "Email",
@@ -52,10 +53,11 @@ function Contact() {
   return (
     <section className="py-10 px-2 sm:py-16 sm:px-4 transition-colors duration-500">
       <div className="max-w-md sm:max-w-xl md:max-w-3xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-center">Let's connect</h2>
-        <p className="text-center text-gray-600 dark:text-gray-400 mb-10 text-sm sm:text-base">
-          Open to internships, research collaborations, and side projects.
-        </p>
+        <SectionHeading
+          index={3}
+          title="Let's connect"
+          subtitle="Open to internships, research collaborations, and side projects."
+        />
 
         {/* Outer container */}
         <div className="rounded-2xl border border-gray-200 dark:border-gray-700
