@@ -98,8 +98,8 @@ export default function Intro() {
                   opacity: [1, 1, 0],
                 }}
                 transition={{
-                  duration: 3.5,
-                  times: [0, 0.65, 1],
+                  duration: 2.8,
+                  times: [0, 0.71, 1],
                   ease: "easeInOut",
                 }}
                 style={{
@@ -151,9 +151,9 @@ export default function Intro() {
                     }}
                     animate={{ opacity: [1, 1, 0] }}
                     transition={{
-                      duration: 3.5,
-                      // Fades out exactly at 65% of the timeline, right as the 300x scale begins
-                      times: [0, 0.6, 0.65], 
+                      duration: 2.8,
+                      // Fades out right before the 300x scale begins (at 0.71)
+                      times: [0, 0.66, 0.71],
                       ease: "linear"
                     }}
                   />
@@ -173,33 +173,77 @@ export default function Intro() {
                 transform: "translateY(-50%)",
               }}
             >
-              <motion.h1
+              <h1
                 style={{
                   fontSize: "clamp(2rem, 6vw, 4rem)",
                   fontWeight: 900,
                   letterSpacing: "-0.04em",
                   lineHeight: 1,
                   whiteSpace: "nowrap",
-                  background:
-                    "linear-gradient(to right, #38bdf8 10%, #a855f7 50%, #f472b6 90%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
                   margin: 0,
-                  willChange: "transform, opacity" // Hardware acceleration hint
-                }}
-                // Removed the expensive "filter: blur()" and replaced with a smooth Y slide
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{
-                  delay: 3.5,
-                  duration: 1.2,
-                  ease: [0.16, 1, 0.3, 1],
                 }}
               >
-                WELCOME
-              </motion.h1>
+                {"WELCOME".split("").map((letter, i) => (
+                  <motion.span
+                    key={i}
+                    style={{
+                      display: "inline-block",
+                      background:
+                        "linear-gradient(135deg, #38bdf8 0%, #a855f7 50%, #f472b6 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                      willChange: "transform, opacity",
+                    }}
+                    initial={{ opacity: 0, scale: 0.3, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{
+                      delay: 2.8 + i * 0.08,
+                      duration: 0.22,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                  >
+                    {letter}
+                  </motion.span>
+                ))}
+              </h1>
             </div>
+
+            {/* Shockwave rings on each ball landing — physical impact feedback.
+                Ball lands at 50%, 75%, 90% of its 2s sequence = 1.0s, 1.5s, 1.8s. */}
+            {[
+              { delay: 1.0, max: 4.5 },
+              { delay: 1.5, max: 3.0 },
+              { delay: 1.8, max: 1.8 },
+            ].map((ring, i) => (
+              <motion.div
+                key={`ring-${i}`}
+                aria-hidden
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  width: 60,
+                  height: 60,
+                  marginLeft: -30,
+                  marginTop: -30,
+                  borderRadius: "50%",
+                  border: "1px solid rgba(255,255,255,0.6)",
+                  pointerEvents: "none",
+                  willChange: "transform, opacity",
+                }}
+                initial={{ scale: 0.1, opacity: 0 }}
+                animate={{
+                  scale: [0.1, ring.max],
+                  opacity: [0.7, 0],
+                }}
+                transition={{
+                  delay: ring.delay,
+                  duration: 0.85,
+                  ease: [0.2, 0.8, 0.4, 1],
+                }}
+              />
+            ))}
           </div>
 
           {/* Subtle vignette */}
