@@ -10,5 +10,6 @@ export default function Aurora() {
       <div className="aurora-blob aurora-blob-2" />
       <div className="aurora-blob aurora-blob-3" />
     </div>
+    
   );
-}
+} 
