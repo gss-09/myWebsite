@@ -9,11 +9,13 @@ import FadeIn from "./components/FadeIn";
 import ScrollProgress from "./components/ScrollProgress";
 import Aurora from "./components/Aurora";
 import InteractiveBg from "./components/InteractiveBg";
+import Intro from "./components/Intro";
 import "./index.css";
 
 function App() {
   return (
     <>
+      <Intro />
       <CustomCursor />
       <ScrollProgress />
       <div className="bg-fade fixed inset-0 -z-10"></div>
