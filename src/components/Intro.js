@@ -6,7 +6,7 @@ function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-const TOTAL_DURATION_MS = 4200;
+const TOTAL_DURATION_MS = 5000;
 
 export default function Intro() {
   const [visible, setVisible] = useState(() => {
@@ -54,7 +54,7 @@ export default function Intro() {
         >
           <div className="absolute inset-0" style={{ height: "100vh", position: "relative" }}>
             
-            {/* Horizon hairline - Set exactly at 50% */}
+            {/* Horizon hairline */}
             <motion.div
               style={{
                 position: "absolute",
@@ -63,6 +63,7 @@ export default function Intro() {
                 right: 0,
                 display: "flex",
                 justifyContent: "center",
+                willChange: "opacity" // Hardware acceleration hint
               }}
               animate={{ opacity: [1, 1, 0] }}
               transition={{ duration: 3.0, times: [0, 0.75, 1] }}
@@ -78,8 +79,7 @@ export default function Intro() {
               />
             </motion.div>
 
-            {/* Ball Wrapper - Top is offset by exactly the ball's height (18px) 
-                so the bottom of the wrapper touches the 50% horizon line perfectly. */}
+            {/* Ball Wrapper */}
             <div
               style={{
                 position: "absolute",
@@ -94,7 +94,7 @@ export default function Intro() {
             >
               <motion.div
                 animate={{
-                  scale: [1, 1, 300], // Increased to 300 to ensure full screen coverage
+                  scale: [1, 1, 300],
                   opacity: [1, 1, 0],
                 }}
                 transition={{
@@ -105,20 +105,20 @@ export default function Intro() {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
+                  willChange: "transform, opacity" // Hardware acceleration hint
                 }}
               >
-                {/* Inner Ball */}
+                {/* Inner Ball - Separated the background from the shadow */}
                 <motion.div
                   style={{
+                    position: "relative", // Needed to hold the absolute glow layer
                     width: 18,
                     height: 18,
                     borderRadius: "50%",
                     background: "white",
-                    // Ensures squash and stretch happens against the ground, not from the center
                     transformOrigin: "bottom center", 
-                    boxShadow:
-                      "0 0 28px rgba(255,255,255,0.75), 0 0 70px rgba(168,85,247,0.6), 0 0 140px rgba(56,189,248,0.4)",
+                    willChange: "transform" // Hardware acceleration hint
                   }}
                   initial={{ y: "-50vh", scaleX: 0.6, scaleY: 0.6, opacity: 0 }}
                   animate={{
@@ -140,7 +140,24 @@ export default function Intro() {
                       [0.5, 0, 1, 1], 
                     ],
                   }}
-                />
+                >
+                  {/* The Glow Layer - Fades out entirely right before the giant zoom happens! */}
+                  <motion.div 
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: "50%",
+                      boxShadow: "0 0 28px rgba(255,255,255,0.75), 0 0 70px rgba(168,85,247,0.6), 0 0 140px rgba(56,189,248,0.4)"
+                    }}
+                    animate={{ opacity: [1, 1, 0] }}
+                    transition={{
+                      duration: 3.5,
+                      // Fades out exactly at 65% of the timeline, right as the 300x scale begins
+                      times: [0, 0.6, 0.65], 
+                      ease: "linear"
+                    }}
+                  />
+                </motion.div>
               </motion.div>
             </div>
 
@@ -148,7 +165,7 @@ export default function Intro() {
             <div
               style={{
                 position: "absolute",
-                top: "50%",
+                top: "45%", 
                 left: 0,
                 right: 0,
                 display: "flex",
@@ -169,9 +186,11 @@ export default function Intro() {
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
                   margin: 0,
+                  willChange: "transform, opacity" // Hardware acceleration hint
                 }}
-                initial={{ opacity: 0, filter: "blur(24px)", scale: 0.8 }}
-                animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+                // Removed the expensive "filter: blur()" and replaced with a smooth Y slide
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{
                   delay: 3.5,
                   duration: 1.2,
