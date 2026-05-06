@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 
-function isTouchDevice() {
-  return (
-    typeof window !== "undefined" &&
-    ("ontouchstart" in window ||
-      navigator.maxTouchPoints > 0 ||
-      navigator.msMaxTouchPoints > 0)
-  );
+// True if the device has a mouse / trackpad (fine pointer with hover).
+// Returns true on touch-screen laptops too, since they have both touch AND
+// a trackpad — we want the custom cursor to render in that case.
+function hasFinePointer() {
+  if (typeof window === "undefined" || !window.matchMedia) return false;
+  return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 }
 
 function CustomCursor() {
@@ -16,7 +15,8 @@ function CustomCursor() {
   const [isHover, setIsHover] = useState(false);
   const [isDown, setIsDown] = useState(false);
   const [ripples, setRipples] = useState([]);
-  const [isTouch] = useState(isTouchDevice);
+  const [hasMouse] = useState(hasFinePointer);
+  const isTouch = !hasMouse;
   const mouseRef = useRef({ x: -200, y: -200 });
   const ringRef = useRef({ x: -200, y: -200 });
   const rafRef = useRef();
@@ -99,6 +99,17 @@ function CustomCursor() {
     }, 60);
     return () => clearInterval(t);
   }, [ripples]);
+
+  // Toggle a class on <html> so CSS can hide the native cursor only when
+  // the custom cursor is actually rendering. Avoids "missing cursor" on touch
+  // devices and over iframes (resume PDF dispatches `cursorhide`).
+  useEffect(() => {
+    const active = !isTouch && visible;
+    document.documentElement.classList.toggle("custom-cursor-active", active);
+    return () => {
+      document.documentElement.classList.remove("custom-cursor-active");
+    };
+  }, [isTouch, visible]);
 
   if (isTouch || !visible) return null;
 
