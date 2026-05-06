@@ -6,7 +6,7 @@ function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-const TOTAL_DURATION_MS = 4000;
+const TOTAL_DURATION_MS = 4200;
 
 export default function Intro() {
   const [visible, setVisible] = useState(() => {
