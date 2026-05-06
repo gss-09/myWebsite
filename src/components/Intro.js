@@ -199,7 +199,7 @@ export default function Intro() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{
                       delay: 2.8 + i * 0.08,
-                      duration: 0.22,
+                      duration: 0.1,
                       ease: [0.16, 1, 0.3, 1],
                     }}
                   >
