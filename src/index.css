@@ -242,8 +242,8 @@ html.light .kv .row:nth-child(odd){background:rgba(0,0,0,.02)}
 .kv .k{color:var(--dim);width:96px;flex:none}.kv .k::before{content:"› "}
 
 /* experience — ls listing */
-.ls{border:1px solid var(--line);border-radius:7px;overflow:hidden;max-width:780px}
-.lsrow{display:grid;grid-template-columns:112px 1fr auto;gap:16px;padding:13px 16px;align-items:baseline;
+.ls{border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.lsrow{display:grid;grid-template-columns:120px 1fr max-content;gap:16px;padding:13px 18px;align-items:baseline;
   border-bottom:1px solid var(--line);position:relative;transition:background .15s,padding-left .15s}
 .lsrow:last-child{border-bottom:0}
 .lsrow:hover{background:rgba(255,176,0,.06);padding-left:26px}
