@@ -5,7 +5,7 @@ const projects = [
     hash: "a1f76c4",
     ref: "(HEAD → main, tag: hackathon)",
     name: "medic(aids)",
-    date: "2026.09",
+    date: "2026.01",
     body: (
       <>
         Predicts AIDS treatment outcomes at{" "}
