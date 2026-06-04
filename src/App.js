@@ -4,6 +4,7 @@ import Experience from "./components/Experience";
 import Projects from "./components/Projects";
 import Resume from "./components/Resume";
 import Contact from "./components/Contact";
+import Clock from "./components/Clock";
 import "./index.css";
 
 const NAV = [
@@ -24,10 +25,10 @@ function App() {
     () => localStorage.getItem("crt-theme") === "light"
   );
   const [active, setActive] = useState("home");
-  const [clock, setClock] = useState("--:--:--");
   const [on, setOn] = useState(false); // land in standby; visitor powers it on
   const [interacted, setInteracted] = useState(false);
   const scrollRef = useRef(null);
+  const ticking = useRef(false);
 
   const togglePower = () => {
     setInteracted(true);
@@ -40,29 +41,25 @@ function App() {
     localStorage.setItem("crt-theme", light ? "light" : "dark");
   }, [light]);
 
-  // live clock
-  useEffect(() => {
-    const fmt = () =>
-      setClock(new Date().toLocaleTimeString("en-US", { hour12: false }));
-    fmt();
-    const id = setInterval(fmt, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  // active-section tracking inside the scroll buffer
+  // active-section tracking — throttled to one rAF per frame, updates only on change
   const onScroll = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const probe = el.scrollTop + 120;
-    let current = NAV[0].id;
-    for (const { id } of NAV) {
-      const node = document.getElementById(id);
-      if (node && node.offsetTop <= probe) current = id;
-    }
-    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 8) {
-      current = NAV[NAV.length - 1].id;
-    }
-    setActive(current);
+    if (ticking.current) return;
+    ticking.current = true;
+    requestAnimationFrame(() => {
+      ticking.current = false;
+      const el = scrollRef.current;
+      if (!el) return;
+      const probe = el.scrollTop + 120;
+      let current = NAV[0].id;
+      for (const { id } of NAV) {
+        const node = document.getElementById(id);
+        if (node && node.offsetTop <= probe) current = id;
+      }
+      if (el.scrollTop + el.clientHeight >= el.scrollHeight - 8) {
+        current = NAV[NAV.length - 1].id;
+      }
+      setActive((prev) => (prev === current ? prev : current));
+    });
   }, []);
 
   const goTo = (id) => {
@@ -134,7 +131,7 @@ function App() {
                 <span className="sp" />
                 <span className="seg alt">utf-8 · jsx</span>
                 <span className="seg">{active}</span>
-                <span className="clock">{clock}</span>
+                <Clock />
               </div>
               </div>
             </div>

@@ -162,7 +162,7 @@ html.light .screen .curve{background:radial-gradient(112% 112% at 50% 50%,transp
 .screen.is-off .standby{opacity:.45;transition:opacity .4s ease .5s}
 .led.dead{background:radial-gradient(circle at 35% 30%,#8c8c8c,#4a4a4a 60%,#2a2a2a);
   box-shadow:inset 0 -1px 2px rgba(0,0,0,.5);animation:none}
-.pwr{width:36px;height:23px;border-radius:5px;display:flex;align-items:center;justify-content:center;
+.pwr{position:relative;width:36px;height:23px;border-radius:5px;display:flex;align-items:center;justify-content:center;
   color:#6f6650;font-size:14px;cursor:pointer;border:0;font-family:inherit;
   background:linear-gradient(180deg,#e4ddcc,#a89f86);
   box-shadow:inset 0 1px 1px rgba(255,255,255,.85),inset 0 -2px 3px rgba(0,0,0,.32),0 2px 3px rgba(0,0,0,.3)}
@@ -170,12 +170,13 @@ html.light .screen .curve{background:radial-gradient(112% 112% at 50% 50%,transp
 .pwr.lit{color:#3b9dff;font-weight:700;
   text-shadow:0 0 8px rgba(59,157,255,.95),0 0 16px rgba(59,157,255,.6),0 0 3px rgba(59,157,255,1)}
 /* invite the click while the screen is off — strong cyan glow pulse */
-.pwr:not(.lit){animation:pwrhint 1.5s ease-in-out infinite}
-@keyframes pwrhint{
-  0%,100%{color:#19e6ff;filter:drop-shadow(0 0 2px rgba(25,230,255,.5))}
-  50%{color:#7df3ff;
-    filter:drop-shadow(0 0 7px rgba(25,230,255,1)) drop-shadow(0 0 16px rgba(25,230,255,.85)) drop-shadow(0 0 30px rgba(25,230,255,.6))}
-}
+/* glow pulse via opacity of a pre-rendered shadow layer (GPU-composited,
+   cheap in Safari/Firefox — unlike animating filter/box-shadow directly) */
+.pwr:not(.lit){color:#19e6ff;text-shadow:0 0 6px rgba(25,230,255,.85)}
+.pwr:not(.lit)::after{content:"";position:absolute;inset:-5px;border-radius:9px;pointer-events:none;
+  box-shadow:0 0 14px 3px rgba(25,230,255,.95),0 0 26px 7px rgba(25,230,255,.5);
+  opacity:0;animation:glowpulse 1.6s ease-in-out infinite}
+@keyframes glowpulse{0%,100%{opacity:.18}50%{opacity:1}}
 
 /* ---------- Top prompt nav (fixed within screen) ---------- */
 .crt-nav{position:relative;z-index:6;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
@@ -382,12 +383,15 @@ html.light .themebtn,html.light .pwr{color:#eceef1;background:linear-gradient(18
   .deck-brand{font-size:10px;letter-spacing:.05em;color:#7a7f87;font-weight:700;white-space:nowrap}
   .deck-brand span{color:#9aa0a8}
   .deck-actions{display:flex;gap:14px;flex:none}
-  .rbtn{width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;font-family:inherit;font-size:17px;
+  .rbtn{position:relative;width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;font-family:inherit;font-size:17px;
     color:#cdd3c9;background:radial-gradient(circle at 38% 30%,#4c4f56,#27292e 70%,#15161a);
     box-shadow:inset 0 2px 2px rgba(255,255,255,.18),inset 0 -3px 4px rgba(0,0,0,.6),0 3px 4px rgba(0,0,0,.5)}
   .rbtn:active{box-shadow:inset 0 3px 5px rgba(0,0,0,.7)}
   .rbtn.pwr2.lit{color:#3b9dff;text-shadow:0 0 9px rgba(59,157,255,.95),0 0 16px rgba(59,157,255,.55)}
-  .rbtn.pwr2:not(.lit){animation:pwrhint 2.4s ease-in-out infinite}
+  .rbtn.pwr2:not(.lit){color:#19e6ff;text-shadow:0 0 6px rgba(25,230,255,.85)}
+  .rbtn.pwr2:not(.lit)::after{content:"";position:absolute;inset:-4px;border-radius:50%;pointer-events:none;
+    box-shadow:0 0 14px 3px rgba(25,230,255,.95),0 0 26px 7px rgba(25,230,255,.5);
+    opacity:0;animation:glowpulse 1.8s ease-in-out infinite}
 }
 
 @media (prefers-reduced-motion:reduce){
