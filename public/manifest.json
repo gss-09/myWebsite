@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Shriyans Sai",
+  "name": "Shriyans Sai — Portfolio",
+  "description": "Portfolio of Shriyans Sai – AI, Machine Learning, and Data Science projects.",
   "icons": [
     {
       "src": "favicon.ico",
