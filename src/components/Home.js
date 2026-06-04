@@ -1,91 +1,61 @@
-import React from "react";
-import RotatingTitle from "./RotatingTitle";
-import SkillsMarquee from "./SkillsMarquee";
+import { useEffect, useState } from "react";
+import { lines } from "./lines";
 
-function Home() {
+const TAG =
+  "cs student building systems at the intersection of ai, machine learning & software.";
+
+export default function Home() {
+  const [typed, setTyped] = useState("");
+
+  useEffect(() => {
+    let i = 0;
+    let id;
+    const tick = () => {
+      setTyped(TAG.slice(0, i));
+      if (i++ < TAG.length) id = setTimeout(tick, 26);
+    };
+    tick();
+    return () => clearTimeout(id);
+  }, []);
+
   return (
-    <section className="py-10 px-2 sm:py-16 sm:px-4 transition-colors duration-500">
-      <div className="max-w-md sm:max-w-xl md:max-w-2xl mx-auto">
+    <section className="section" id="home" data-lines={lines(18)}>
+      <div className="ps1">
+        <b>shriyans</b>@<b>portfolio</b> <span className="amber">~</span>{" "}
+        <span className="dim">main ✗</span>
+      </div>
+      <div className="cmd">cat ./whoami.txt</div>
 
-        {/* Hero */}
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-8 mb-12">
-          <div className="relative flex-shrink-0">
-            <div
-              aria-hidden
-              className="absolute -inset-1.5 rounded-2xl opacity-60 blur-xl
-                bg-gradient-to-tr from-sky-400 via-purple-400 to-pink-400"
-            />
-            <img
-              src="/photo.jpg"
-              alt="Shriyans Sai"
-              className="relative w-36 h-48 sm:w-44 sm:h-56 rounded-2xl object-cover shadow-lg border border-gray-200 dark:border-gray-700"
-            />
+      <div className="hero">
+        <div className="badge">
+          <img src="/photo.jpg" alt="Shriyans Sai" />
+          <div className="cap">ID — SS//2026</div>
+        </div>
+        <div className="htext">
+          <div className="banner">
+            SHRIYANS<span className="u">_</span>SAI
           </div>
-          <div className="text-center sm:text-left flex-1">
-            <div className="text-xs font-mono tracking-[0.25em] uppercase text-gray-500 dark:text-gray-400 mb-2">
-              Hello world
+          <div className="tag">
+            <span className="dim">{"// "}</span>
+            {typed}
+            <span className="cur" />
+          </div>
+          <div className="kv">
+            <div className="row">
+              <span className="k">role</span>
+              <span>CS student @ University of Houston</span>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-extrabold mb-3 leading-tight">
-              I'm{" "}
-              <span className="bg-gradient-to-r from-sky-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Shriyans Sai
-              </span>
-            </h1>
-            <div className="text-lg sm:text-2xl mb-4 min-h-[1.8em]">
-              <RotatingTitle />
+            <div className="row">
+              <span className="k">focus</span>
+              <span>AI · machine learning · software</span>
             </div>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              CS Junior at the University of Houston &mdash; building things at the intersection of AI, machine learning, and software engineering.
-            </p>
+            <div className="row">
+              <span className="k">status</span>
+              <span className="green">● open to internships [2026]</span>
+            </div>
           </div>
         </div>
-
-        {/* Skills marquee */}
-        <div className="mb-14">
-          <SkillsMarquee />
-        </div>
-
-        {/* About */}
-        <div className="mb-14">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 border-b border-gray-300 dark:border-gray-600 pb-2">About</h2>
-          <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
-            I'm a junior studying Computer Science at the University of Houston with a focus on AI and machine learning.
-            I enjoy building everything from full-stack web apps to data science pipelines, and I'm currently doing
-            undergraduate research on adapting world-model architectures for time series prediction.
-          </p>
-        </div>
-
-        {/* Resume */}
-        <div>
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 border-b border-gray-300 dark:border-gray-600 pb-2">Resume</h2>
-          <div
-            className="w-full rounded-xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700"
-            onMouseEnter={() => window.dispatchEvent(new Event("cursorhide"))}
-            onMouseLeave={() => window.dispatchEvent(new Event("cursorshow"))}
-          >
-            <iframe
-              src="/resume.pdf?v=2"
-              title="Shriyans Sai Resume"
-              className="w-full"
-              style={{ height: "780px" }}
-            />
-          </div>
-          <div className="mt-4 text-center">
-            <a
-              href="/resume.pdf?v=2"
-              download
-              className="inline-block px-6 py-2 rounded-lg font-semibold
-                bg-black text-white dark:bg-white dark:text-black
-                transition-opacity duration-200 hover:opacity-75"
-            >
-              Download Resume
-            </a>
-          </div>
-        </div>
-
       </div>
     </section>
   );
 }
-
-export default Home;

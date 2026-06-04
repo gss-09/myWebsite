@@ -2,263 +2,394 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---------- Custom scrollbar ---------- */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.28);
-  border-radius: 999px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-  transition: background 0.2s ease;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.5);
-  background-clip: padding-box;
-}
-/* Dark mode — apply to html.dark itself, not just descendants */
-html.dark::-webkit-scrollbar-thumb,
-.dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.28);
-  background-clip: padding-box;
-}
-html.dark::-webkit-scrollbar-thumb:hover,
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-  background-clip: padding-box;
-}
-/* Firefox */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.28) transparent;
-}
-html.dark {
-  scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
+/* =====================================================================
+   SHRIYANS//OS — skeuomorphic CRT terminal portfolio
+   Default theme = dark (screen on). html.light = "daylight" theme.
+   Accent lives in --amber; swap it (e.g. #5bd66f) to recolor the phosphor.
+   ===================================================================== */
+
+:root{
+  --amber:#ffb000; --amber-d:#c98a06; --green:#5bd66f;
+  --fg:#cdd3c9; --dim:#6f766c; --bright:#f2f5ee;
+  --line:#1d211d; --panel:#0e110f; --screen-bg:#0a0d07;
+  /* monitor plastic */
+  --case:#c9c1ad; --case-hi:#e7e0cf; --case-lo:#9a917b; --case-sh:#6f6651;
+  /* glows (killed in light mode) */
+  --glow-amber:0 0 12px rgba(255,176,0,.5);
+  --glow-amber-strong:0 0 18px rgba(255,176,0,.6),0 0 44px rgba(255,176,0,.22);
+  --glow-green:0 0 10px rgba(91,214,111,.5);
+  --txt-glow:0 0 8px rgba(255,176,0,.16);
+  --scan:rgba(0,0,0,.16);
+  --line-color:#f2f5ee; /* the solid power line — visible on the black tube */
+  --line-glow:0 0 12px rgba(242,245,238,.6),0 0 22px rgba(242,245,238,.22);
 }
 
-/* ---------- Background (off-pure for less harshness) ---------- */
-.bg-fade {
-  transition: background 0.6s cubic-bezier(.4,0,.2,1);
-  background: #fafafa;
-}
-.dark .bg-fade {
-  background: #0a0a0a;
-}
-
-/* ---------- Body & typography ---------- */
-body {
-  color: #111;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Helvetica Neue', sans-serif;
-  font-feature-settings: 'ss01', 'cv11';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  min-height: 100vh;
-}
-.dark body {
-  color: #f5f5f5;
+html.light{
+  --amber:#9a4708; --amber-d:#7c3d0e; --green:#0f6e34;
+  --fg:#1f1d18; --dim:#615c4b; --bright:#120f0c;
+  --line:#ded6c2; --panel:#fbfaf3; --screen-bg:#faf6ec;
+  --glow-amber:none; --glow-amber-strong:none; --glow-green:none; --txt-glow:none;
+  --scan:rgba(90,70,20,.05);
+  /* dark graphite casing so the frame stands out against the warm light desk */
+  --case:#5b5f67; --case-hi:#7a7f88; --case-lo:#42454c; --case-sh:#2c2e33;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  letter-spacing: -0.022em;
-  font-feature-settings: 'ss01', 'cv11';
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  background:radial-gradient(125% 120% at 50% 0%, #2a2620 0%, #19150f 52%, #0b0907 100%);
+  color:var(--fg);min-height:100vh;-webkit-font-smoothing:antialiased;
+  transition:background .55s ease,color .55s ease;
 }
-p {
-  letter-spacing: -0.005em;
+html.light body{background:radial-gradient(125% 120% at 50% -10%, #f3ecdb 0%, #e7ddc8 55%, #d8ccb2 100%)}
+/* smooth theme crossfade — cheap props only (shadow transitions caused
+   repaint glitches on zoom, so they're applied per-element where needed) */
+*,*::before,*::after{transition:background-color .5s ease,color .5s ease,border-color .5s ease}
+.monitor,.screen,.bezel,.crt-status,.banner,.amber,.green,.commit::before{
+  transition:background-color .5s ease,color .5s ease,border-color .5s ease,box-shadow .5s ease,text-shadow .5s ease}
+
+a{color:var(--amber);text-decoration:none;border-bottom:1px dotted rgba(255,176,0,.4)}
+a:hover{color:var(--bright);border-bottom-color:var(--bright)}
+html.light a{border-bottom-color:rgba(180,83,9,.45)}
+
+/* desk grain */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------- Stage / stand ---------- */
+.desk{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:16px 18px}
+.setup{display:flex;flex-direction:column;align-items:center;width:100%}
+
+/* ---------- Monitor casing ---------- */
+.monitor{
+  position:relative;width:min(1500px,94vw);border-radius:34px 34px 26px 26px;padding:26px 26px 0;
+  background:linear-gradient(180deg,var(--case-hi) 0%,var(--case) 15%,var(--case) 80%,var(--case-lo) 100%);
+  box-shadow:
+    inset 0 3px 2px rgba(255,255,255,.7),
+    inset 0 -8px 14px rgba(0,0,0,.22),
+    inset 7px 0 14px rgba(255,255,255,.14),
+    inset -7px 0 14px rgba(0,0,0,.16),
+    0 40px 80px -22px rgba(0,0,0,.82),
+    0 16px 30px -12px rgba(0,0,0,.55);
+}
+.screw{position:absolute;width:13px;height:13px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#efe9da,#b3aa92 60%,#8a8169);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.8),inset 0 -1px 2px rgba(0,0,0,.4),0 1px 1px rgba(0,0,0,.3)}
+.screw::after{content:"";position:absolute;inset:3px;border-radius:50%;
+  background:linear-gradient(135deg,transparent 44%,#7d745d 44%,#7d745d 56%,transparent 56%)}
+.screw.tl{top:16px;left:22px}.screw.tr{top:16px;right:22px}
+.screw.bl{bottom:23px;left:22px}.screw.br{bottom:23px;right:22px}
+
+/* ---------- Bezel + glass screen ---------- */
+.bezel{border-radius:20px;padding:12px;
+  background:linear-gradient(180deg,#26241f,#34312a);
+  box-shadow:inset 0 4px 10px rgba(0,0,0,.85),inset 0 -3px 6px rgba(255,255,255,.06),0 1px 0 rgba(255,255,255,.4)}
+html.light .bezel{background:linear-gradient(180deg,#3b3e44,#2d2f34)}
+
+.screen{position:relative;border-radius:14px;overflow:hidden;
+  height:clamp(360px,calc(100vh - 240px),900px);
+  display:flex;flex-direction:column;transform:translateZ(0);
+  background:#060807; /* the off/black glass; the content layer carries the lit bg */
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.6)}
+
+/* screen overlays */
+.screen .curve{position:absolute;inset:0;pointer-events:none;z-index:7;border-radius:14px;
+  background:radial-gradient(112% 112% at 50% 50%,transparent 56%,rgba(0,0,0,.6) 100%)}
+html.light .screen .curve{background:radial-gradient(112% 112% at 50% 50%,transparent 62%,rgba(80,60,10,.1) 100%)}
+.screen .scan{position:absolute;inset:0;pointer-events:none;z-index:8;
+  background:repeating-linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0) 3px,var(--scan) 4px)}
+.screen .glare{position:absolute;inset:0;pointer-events:none;z-index:9;border-radius:14px;
+  background:linear-gradient(125deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.03) 18%,transparent 38%)}
+/* the solid power line (centered) — the picture opens from / collapses into it */
+.crtline{position:absolute;left:0;right:0;top:50%;height:3px;margin-top:-1.5px;z-index:11;
+  background:var(--line-color);box-shadow:var(--line-glow);
+  transform:scaleX(0);opacity:0;pointer-events:none}
+.crtline.off{animation:lineoff .72s ease forwards}
+.crtline.on{animation:lineon .72s ease forwards}
+/* off: snap to a solid full-width line, hold, then recede from both sides */
+@keyframes lineoff{
+  0%  {opacity:0;transform:scaleX(1)}
+  30% {opacity:1;transform:scaleX(1)}
+  56% {opacity:1;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(0)}
+}
+/* on: line spreads from center, holds, then fades as the picture opens */
+@keyframes lineon{
+  0%  {opacity:0;transform:scaleX(0)}
+  24% {opacity:1;transform:scaleX(1)}
+  52% {opacity:1;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(1)}
 }
 
-/* Text selection */
-::selection {
-  background: rgba(168, 85, 247, 0.30);
-  color: inherit;
+/* ---------- Power off / on (tube collapse) ---------- */
+.tube{flex:1;display:flex;flex-direction:column;min-height:0;transform-origin:center center;
+  background:var(--screen-bg)}
+.tube.off{animation:crtoff .72s ease-in forwards;pointer-events:none}
+.tube.on{animation:crton .72s ease-out forwards}
+/* initial standby — already off, no shutdown animation on load */
+.tube.off-static{transform:scaleY(.004);opacity:0;pointer-events:none}
+/* CRT shutdown:
+   phase 1 — top & bottom close in until the picture is a bright line
+   phase 2 — the line recedes inward from both sides to a point → standby */
+/* picture collapses to / opens from the centre line — no brightness flash,
+   so the boot stays black and simply opens to the content */
+@keyframes crtoff{
+  0%  {transform:scaleY(1);opacity:1}
+  40% {transform:scaleY(.02);opacity:.35}
+  48% {transform:scaleY(.004);opacity:0}
+  100%{transform:scaleY(.004);opacity:0}
 }
-.dark ::selection {
-  background: rgba(168, 85, 247, 0.45);
+@keyframes crton{
+  0%  {transform:scaleY(.004);opacity:0}
+  48% {transform:scaleY(.004);opacity:0}
+  58% {transform:scaleY(.05);opacity:1}
+  100%{transform:scaleY(1);opacity:1}
 }
-
-/* Hide native cursor only when the custom cursor is actually rendering
-   AND the device has a fine pointer. Touch devices and iframe hovers
-   (where the custom cursor is hidden) get the native cursor back. */
-@media (hover: hover) and (pointer: fine) {
-  html.custom-cursor-active,
-  html.custom-cursor-active *,
-  html.custom-cursor-active *::before,
-  html.custom-cursor-active *::after {
-    cursor: none !important;
-  }
-}
-
-/* ---------- Transitions ----------
-   Scoped to body only (was every div/span/section, which made theme toggle
-   subscribe paint listeners on hundreds of nodes — major Safari/FF cost). */
-body {
-  transition:
-    color 0.3s cubic-bezier(.4,0,.2,1),
-    background 0.3s cubic-bezier(.4,0,.2,1);
-}
-a, button, [role="button"], .clickable {
-  transition:
-    color 0.3s cubic-bezier(.4,0,.2,1),
-    background 0.3s cubic-bezier(.4,0,.2,1),
-    border-color 0.3s cubic-bezier(.4,0,.2,1),
-    text-decoration-color 0.3s cubic-bezier(.4,0,.2,1),
-    transform 0.3s cubic-bezier(.4,0,.2,1);
-}
-
-/* Subtler hover scale (was 1.10 — felt too jumpy) */
-@media (min-width: 768px) {
-  a:hover, button:hover, [role="button"]:hover, .clickable:hover {
-    transform: scale(1.05);
-  }
-}
-
-.social-link {
-  transition:
-    color 0.2s linear,
-    background 0.2s linear,
-    border-color 0.2s linear,
-    text-decoration-color 0.2s linear,
-    transform 0.2s linear !important;
-}
-@media (min-width: 768px) {
-  .social-link:hover {
-    transform: scale(1.05);
-  }
+/* orchestrated staggered reveal of the sections right after power-on */
+.tube.on .buffer section{animation:secin .6s cubic-bezier(.16,1,.3,1) both}
+.tube.on .buffer section:nth-of-type(1){animation-delay:.30s}
+.tube.on .buffer section:nth-of-type(2){animation-delay:.40s}
+.tube.on .buffer section:nth-of-type(3){animation-delay:.50s}
+.tube.on .buffer section:nth-of-type(4){animation-delay:.60s}
+.tube.on .buffer section:nth-of-type(5){animation-delay:.70s}
+@keyframes secin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+/* when off, show a faint "standby" message centered on the dark glass */
+.screen.is-off,html.light .screen.is-off{background:#060807}
+.standby{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;
+  color:#5a615a;font-size:13px;letter-spacing:.18em;opacity:0;pointer-events:none}
+.screen.is-off .standby{opacity:.45;transition:opacity .4s ease .5s}
+.led.dead{background:radial-gradient(circle at 35% 30%,#8c8c8c,#4a4a4a 60%,#2a2a2a);
+  box-shadow:inset 0 -1px 2px rgba(0,0,0,.5);animation:none}
+.pwr{width:36px;height:23px;border-radius:5px;display:flex;align-items:center;justify-content:center;
+  color:#6f6650;font-size:14px;cursor:pointer;border:0;font-family:inherit;
+  background:linear-gradient(180deg,#e4ddcc,#a89f86);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.85),inset 0 -2px 3px rgba(0,0,0,.32),0 2px 3px rgba(0,0,0,.3)}
+.pwr:active{box-shadow:inset 0 2px 4px rgba(0,0,0,.5)}
+.pwr.lit{color:#3b9dff;font-weight:700;
+  text-shadow:0 0 8px rgba(59,157,255,.95),0 0 16px rgba(59,157,255,.6),0 0 3px rgba(59,157,255,1)}
+/* invite the click while the screen is off — strong cyan glow pulse */
+.pwr:not(.lit){animation:pwrhint 1.5s ease-in-out infinite}
+@keyframes pwrhint{
+  0%,100%{color:#19e6ff;filter:drop-shadow(0 0 2px rgba(25,230,255,.5))}
+  50%{color:#7df3ff;
+    filter:drop-shadow(0 0 7px rgba(25,230,255,1)) drop-shadow(0 0 16px rgba(25,230,255,.85)) drop-shadow(0 0 30px rgba(25,230,255,.6))}
 }
 
-/* ---------- Box-sizing & reset ---------- */
-html {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
-.scroll-section {
-  scroll-margin-top: 6rem;
-}
-*, *::before, *::after {
-  box-sizing: inherit;
-}
-* {
-  margin: 0;
-  padding: 0;
+/* ---------- Top prompt nav (fixed within screen) ---------- */
+.crt-nav{position:relative;z-index:6;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:11px 18px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.18)}
+html.light .crt-nav{background:rgba(0,0,0,.03)}
+.crt-nav .who{color:var(--green);text-shadow:var(--glow-green);font-size:13px}
+.crt-nav .who b{color:var(--amber)}
+.crt-nav .links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.crt-nav button{font-family:inherit;font-size:12.5px;color:var(--dim);background:transparent;border:0;
+  padding:4px 9px;cursor:pointer;border-radius:5px}
+.crt-nav button:hover{color:var(--fg)}
+.crt-nav button.on{color:var(--amber);text-shadow:var(--glow-amber);background:rgba(255,176,0,.08)}
+html.light .crt-nav button.on{background:rgba(180,83,9,.1)}
+.crt-nav button .br{color:var(--amber-d);opacity:.7}
+
+/* ---------- Scrolling buffer ---------- */
+.crt-scroll{position:relative;z-index:5;flex:1;overflow-y:auto;overflow-x:hidden;
+  scroll-snap-type:y proximity;scrollbar-width:thin;scrollbar-color:rgba(255,176,0,.3) transparent}
+.crt-scroll::-webkit-scrollbar{width:9px}
+.crt-scroll::-webkit-scrollbar-thumb{background:rgba(255,176,0,.28);border-radius:8px;border:2px solid transparent;background-clip:padding-box}
+html.light .crt-scroll::-webkit-scrollbar-thumb{background:rgba(180,83,9,.35);background-clip:padding-box}
+
+.buffer{position:relative}
+/* one continuous line-number gutter for the whole buffer */
+.gutter{position:absolute;left:0;top:0;bottom:0;width:42px;overflow:hidden;
+  padding:30px 8px 0 0;white-space:pre;text-align:right;color:var(--dim);opacity:.7;
+  font-size:12px;line-height:1.9;border-right:1px solid var(--line);
+  background:var(--screen-bg);pointer-events:none;user-select:none;z-index:1}
+.section{scroll-snap-align:start;padding:40px 28px 36px 56px;position:relative;
+  border-bottom:1px dashed var(--line)}
+
+/* ---------- Terminal typography ---------- */
+.ps1{color:var(--green);text-shadow:var(--glow-green);font-size:13.5px;margin-bottom:6px}
+.ps1 b{color:var(--amber)}
+.cmd{font-size:18px;font-weight:500;letter-spacing:.01em;margin:2px 0 14px}
+.cmd::before{content:"❯ ";color:var(--amber);text-shadow:var(--glow-amber)}
+.amber{color:var(--amber);text-shadow:var(--glow-amber)}
+.green{color:var(--green);text-shadow:var(--glow-green)}
+.dim{color:var(--dim)}
+.glow-text{text-shadow:var(--txt-glow)}
+.cur{display:inline-block;width:9px;height:16px;background:var(--amber);vertical-align:-2px;margin-left:3px;
+  box-shadow:var(--glow-amber);animation:blink 1.05s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* hero */
+.hero{display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+.hero .badge{order:2;flex:none;width:200px;border:1px solid var(--line);border-radius:8px;padding:9px;background:rgba(255,255,255,.03)}
+.hero .badge img{display:block;width:100%;height:248px;object-fit:cover;border-radius:5px;filter:saturate(.85) contrast(1.05)}
+.hero .badge .cap{font-size:9.5px;letter-spacing:.1em;color:var(--dim);text-align:center;margin-top:6px}
+.hero .htext{order:1;flex:1;min-width:240px}
+.banner{color:var(--amber);font-weight:800;font-size:clamp(30px,5.6vw,58px);line-height:.96;letter-spacing:-.015em;
+  text-shadow:var(--glow-amber-strong);margin:2px 0}
+.banner .u{color:var(--amber-d);text-shadow:none}
+.tag{margin-top:10px;color:var(--fg);max-width:54ch;min-height:1.7em;font-size:15px}
+.kv{margin-top:16px;border:1px solid var(--line);border-radius:7px;overflow:hidden;max-width:520px}
+.kv .row{display:flex;gap:12px;padding:7px 14px;border-bottom:1px solid var(--line);font-size:14px}
+.kv .row:last-child{border-bottom:0}
+.kv .row:nth-child(odd){background:rgba(255,255,255,.015)}
+html.light .kv .row:nth-child(odd){background:rgba(0,0,0,.02)}
+.kv .k{color:var(--dim);width:96px;flex:none}.kv .k::before{content:"› "}
+
+/* experience — ls listing */
+.ls{border:1px solid var(--line);border-radius:7px;overflow:hidden;max-width:780px}
+.lsrow{display:grid;grid-template-columns:112px 1fr auto;gap:16px;padding:13px 16px;align-items:baseline;
+  border-bottom:1px solid var(--line);position:relative;transition:background .15s,padding-left .15s}
+.lsrow:last-child{border-bottom:0}
+.lsrow:hover{background:rgba(255,176,0,.06);padding-left:26px}
+html.light .lsrow:hover{background:rgba(180,83,9,.07)}
+.lsrow:hover::before{content:"❯";position:absolute;left:12px;color:var(--amber)}
+.lsrow .ltag{color:var(--green);font-size:14px}
+.ltag.t-research{color:#b794f6}
+.ltag.t-work{color:#5bd66f}
+.ltag.t-lead{color:#ffb000}
+html.light .ltag.t-research{color:#7c3aed}
+html.light .ltag.t-work{color:#0f6e34}
+html.light .ltag.t-lead{color:#9a4708}
+.lsrow .role{color:var(--bright);font-weight:500;font-size:15.5px}
+.lsrow .org{color:var(--dim);font-size:13.5px;margin-top:1px}
+.lsrow .body{color:var(--fg);font-size:13.5px;margin-top:7px;max-width:62ch;line-height:1.7}
+.lsrow .date{color:var(--amber-d);font-size:12.5px;white-space:nowrap;text-align:right}
+
+/* projects — git log */
+.log{position:relative;margin-left:6px;padding-left:22px;max-width:760px}
+.log::before{content:"";position:absolute;left:5px;top:8px;bottom:14px;width:1px;background:var(--line)}
+.commit{position:relative;padding:8px 0 18px}
+.commit::before{content:"";position:absolute;left:-21px;top:8px;width:9px;height:9px;border-radius:50%;
+  background:var(--screen-bg);border:2px solid var(--amber);box-shadow:var(--glow-amber)}
+.commit .hash{color:var(--amber);text-shadow:var(--glow-amber)}
+.commit .ref{color:var(--green);font-size:12.5px}
+.commit h3{display:inline;color:var(--bright);font-weight:700;font-size:17px}
+.commit .body{color:var(--fg);margin:6px 0 7px;max-width:64ch;font-size:14.5px;line-height:1.7}
+.commit .remote{font-size:13.5px;margin:0 0 8px}
+.commit .tags span{color:var(--dim);font-size:13px;margin-right:14px}
+.commit .tags span::before{content:"#";color:var(--amber-d)}
+.commit{transition:padding-left .2s ease}
+.commit:hover{padding-left:6px}
+.commit:hover h3{color:var(--amber);text-shadow:var(--glow-amber)}
+.commit:hover::before{box-shadow:0 0 14px 2px var(--amber)}
+
+/* resume */
+.legend{color:var(--dim);font-size:13px;margin:2px 0 10px}
+.pdfpane{border:1px solid var(--line);border-radius:7px;overflow:hidden;margin:6px auto 0;max-width:680px}
+.pdfbar{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;
+  background:rgba(255,255,255,.02);border-bottom:1px solid var(--line)}
+html.light .pdfbar{background:rgba(0,0,0,.03)}
+.pdfbar .nm{color:var(--dim);font-size:13px}.pdfbar .nm::before{content:"▣ ";color:var(--amber)}
+.pdfbar a{font-size:13px}
+.pdfpane iframe{width:100%;height:955px;border:0;display:block;background:#fff}
+
+/* contact */
+.out{font-size:15px;margin:6px 0;transition:padding-left .18s ease}
+.out:hover{padding-left:8px}
+.out:hover .arrow{color:var(--amber)}
+.out .arrow{color:var(--dim);margin-right:12px}
+.out .lbl{display:inline-block;width:90px;color:var(--dim)}
+.eof{padding:18px 26px 40px 56px;color:var(--dim);opacity:.4;white-space:pre;font-size:15px;line-height:1.9;user-select:none}
+
+/* ---------- Bottom status bar (inside screen) ---------- */
+.crt-status{position:relative;z-index:6;display:flex;align-items:center;font-size:12px;
+  background:var(--amber);color:#1a1205;font-weight:700}
+html.light .crt-status{color:#fff7ec}
+.crt-status .mode{background:#1a1205;color:var(--amber);padding:5px 13px;letter-spacing:.08em}
+html.light .crt-status .mode{background:#3a2606}
+.crt-status .seg{padding:5px 13px}
+.crt-status .sp{flex:1}
+.crt-status .alt{background:rgba(0,0,0,.16)}
+.crt-status .clock{background:#1a1205;color:var(--amber);padding:5px 13px}
+html.light .crt-status .clock{background:#3a2606}
+
+/* ---------- Control strip on casing ---------- */
+.controls{display:flex;align-items:center;gap:16px;height:62px;padding:0 46px}
+.deck{display:none}
+.brand{font-weight:800;letter-spacing:.06em;color:#5f5742;font-size:15px;
+  text-shadow:0 1px 0 rgba(255,255,255,.6),0 -1px 1px rgba(0,0,0,.25)}
+.brand span{color:#7a7058;font-weight:500}
+.led{width:11px;height:11px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#bcdcff,#3b9dff 55%,#0b4a8a);
+  box-shadow:0 0 10px 2px rgba(59,157,255,.85),inset 0 -1px 2px rgba(0,0,0,.4);animation:ledpulse 3s ease-in-out infinite}
+@keyframes ledpulse{0%,100%{box-shadow:0 0 9px 2px rgba(59,157,255,.8),inset 0 -1px 2px rgba(0,0,0,.4)}50%{box-shadow:0 0 15px 5px rgba(59,157,255,1),inset 0 -1px 2px rgba(0,0,0,.4)}}
+.ledlabel{color:#6b6450;font-size:10px;letter-spacing:.12em;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+.controls .sp{flex:1}
+.vents{display:flex;gap:4px}
+.vents i{width:4px;height:24px;border-radius:3px;display:block;
+  background:linear-gradient(180deg,#8a8169,#b6ad97);box-shadow:inset 1px 0 1px rgba(0,0,0,.35),inset -1px 0 1px rgba(255,255,255,.4)}
+.knob{width:30px;height:30px;border-radius:50%;position:relative;cursor:pointer;
+  background:radial-gradient(circle at 35% 30%,#efe9da,#b8af97 65%,#8c8369);
+  box-shadow:inset 0 1px 2px rgba(255,255,255,.8),inset 0 -2px 3px rgba(0,0,0,.4),0 2px 3px rgba(0,0,0,.35)}
+.knob::after{content:"";position:absolute;top:5px;left:50%;width:2px;height:9px;border-radius:2px;background:#6f6650;transform:translateX(-50%)}
+.themebtn{display:flex;align-items:center;justify-content:center;gap:7px;font-family:inherit;font-size:12px;
+  color:#5f5742;cursor:pointer;min-width:96px;padding:7px 12px;border-radius:7px;border:0;font-weight:700;
+  background:linear-gradient(180deg,#e4ddcc,#a89f86);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.85),inset 0 -2px 3px rgba(0,0,0,.32),0 2px 3px rgba(0,0,0,.3)}
+.themebtn:active{box-shadow:inset 0 2px 4px rgba(0,0,0,.45)}
+.themebtn .ic{width:9px;height:9px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber)}
+
+/* stand */
+.neck{width:122px;height:24px;margin-top:-2px;border-radius:0 0 10px 10px;
+  background:linear-gradient(180deg,var(--case-lo),var(--case-sh));
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.15),inset 0 -3px 5px rgba(0,0,0,.4)}
+.base{width:300px;height:20px;border-radius:12px/40px;
+  background:linear-gradient(180deg,var(--case),var(--case-sh));
+  box-shadow:inset 0 2px 2px rgba(255,255,255,.4),0 22px 30px -14px rgba(0,0,0,.7),inset 0 -4px 6px rgba(0,0,0,.4)}
+.caption{margin-top:20px;color:#8d836a;font-size:11.5px;letter-spacing:.08em;text-align:center}
+html.light .caption{color:#5d626a}
+html.light .brand{color:#e2e4e8}
+html.light .brand span{color:#aab0b8}
+html.light .ledlabel{color:#bcc0c6}
+html.light .screw{background:radial-gradient(circle at 35% 30%,#aeb3ba,#7e838b 60%,#565a61)}
+html.light .knob{background:radial-gradient(circle at 35% 30%,#9aa0a8,#6c7178 65%,#4a4e55)}
+html.light .vents i{background:linear-gradient(180deg,#42454c,#74798240);box-shadow:inset 1px 0 1px rgba(0,0,0,.4),inset -1px 0 1px rgba(255,255,255,.22)}
+html.light .themebtn,html.light .pwr{color:#eceef1;background:linear-gradient(180deg,#888d96,#5d616a);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.28),inset 0 -2px 3px rgba(0,0,0,.42),0 2px 3px rgba(0,0,0,.35)}
+
+/* ---------- Responsive: simplify on small screens ---------- */
+/* ---------- MOBILE: handheld "pocket terminal" ---------- */
+@media (max-width:720px){
+  .desk{padding:12px 8px}
+  .monitor{width:100%;padding:14px 12px 14px;border-radius:30px}
+  .screw,.neck,.base,.caption,.controls{display:none}
+  .bezel{padding:9px;border-radius:16px}
+  .screen{height:58vh;border-radius:12px}
+  .section{padding:22px 14px 22px 40px}
+  .section::before{font-size:11px}
+  .crt-nav{gap:8px;padding:9px 12px}
+  .crt-nav .links{gap:2px}
+  .crt-nav button{padding:3px 6px;font-size:11.5px}
+  .pdfpane iframe{height:520px}
+  .banner{font-size:clamp(28px,9vw,42px)}
+  .hero .badge{width:120px}
+  .hero .badge img{height:150px}
+
+  /* control deck */
+  .deck{display:flex;align-items:center;gap:12px;margin-top:14px;padding:2px 2px 0}
+  .dpad{position:relative;width:54px;height:54px;flex:none}
+  .dpad i{position:absolute;background:linear-gradient(180deg,#34373d,#191b1e);border-radius:5px;
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.12),0 1px 2px rgba(0,0,0,.5)}
+  .dpad .dv{left:19px;top:0;width:16px;height:54px}
+  .dpad .dh{top:19px;left:0;width:54px;height:16px}
+  .dpad::after{content:"";position:absolute;left:21px;top:21px;width:12px;height:12px;border-radius:50%;
+    background:#0f1012;box-shadow:inset 0 1px 2px rgba(0,0,0,.85)}
+  .deck-mid{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px}
+  .speaker{display:grid;grid-template-columns:repeat(3,6px);gap:5px}
+  .speaker i{width:6px;height:6px;border-radius:50%;background:#101113;box-shadow:inset 0 1px 1px rgba(0,0,0,.85)}
+  .deck-brand{font-size:10px;letter-spacing:.05em;color:#7a7f87;font-weight:700;white-space:nowrap}
+  .deck-brand span{color:#9aa0a8}
+  .deck-actions{display:flex;gap:14px;flex:none}
+  .rbtn{width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;font-family:inherit;font-size:17px;
+    color:#cdd3c9;background:radial-gradient(circle at 38% 30%,#4c4f56,#27292e 70%,#15161a);
+    box-shadow:inset 0 2px 2px rgba(255,255,255,.18),inset 0 -3px 4px rgba(0,0,0,.6),0 3px 4px rgba(0,0,0,.5)}
+  .rbtn:active{box-shadow:inset 0 3px 5px rgba(0,0,0,.7)}
+  .rbtn.pwr2.lit{color:#3b9dff;text-shadow:0 0 9px rgba(59,157,255,.95),0 0 16px rgba(59,157,255,.55)}
+  .rbtn.pwr2:not(.lit){animation:pwrhint 2.4s ease-in-out infinite}
 }
 
-/* ---------- Aurora background blobs (atmospheric, not loud) ----------
-   Blur radius dropped from 120px → 60px. Safari renders blur in software
-   at ~O(r²), so this is roughly 4× cheaper. The radial-gradient already
-   provides soft falloff — the blur is just there to smooth banding. */
-.aurora-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.30;
-  will-change: transform;
-}
-.dark .aurora-blob {
-  opacity: 0.22;
-}
-.aurora-blob-1 {
-  width: 600px;
-  height: 600px;
-  top: -180px;
-  left: -180px;
-  background: radial-gradient(circle, #38bdf8 0%, transparent 70%);
-  animation: aurora-float-1 22s ease-in-out infinite;
-}
-.aurora-blob-2 {
-  width: 540px;
-  height: 540px;
-  top: 28%;
-  right: -200px;
-  background: radial-gradient(circle, #a855f7 0%, transparent 70%);
-  animation: aurora-float-2 26s ease-in-out infinite;
-}
-.aurora-blob-3 {
-  width: 500px;
-  height: 500px;
-  bottom: -180px;
-  left: 28%;
-  background: radial-gradient(circle, #f472b6 0%, transparent 70%);
-  animation: aurora-float-3 30s ease-in-out infinite;
-}
-
-/* ---------- Film-grain noise overlay ----------
-   Dropped mix-blend-mode: overlay — it forced compositing on every paint,
-   which Safari handles especially poorly. Pure opacity gives ~95% of the
-   visual at a fraction of the cost. */
-.noise {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.08;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-.dark .noise {
-  opacity: 0.12;
-}
-
-/* ---------- Edge vignette (focuses the eye on the center) ---------- */
-.vignette {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse at center,
-    transparent 0%,
-    transparent 55%,
-    rgba(0, 0, 0, 0.18) 100%
-  );
-}
-.dark .vignette {
-  background: radial-gradient(
-    ellipse at center,
-    transparent 0%,
-    transparent 50%,
-    rgba(0, 0, 0, 0.55) 100%
-  );
-}
-@keyframes aurora-float-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%      { transform: translate(80px, 60px) scale(1.1); }
-}
-@keyframes aurora-float-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%      { transform: translate(-60px, 40px) scale(1.15); }
-}
-@keyframes aurora-float-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%      { transform: translate(40px, -50px) scale(1.1); }
-}
-
-/* ---------- Skills marquee ---------- */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@keyframes marquee-rev {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
-}
-
-/* ---------- Mobile dropdown animations ---------- */
-@keyframes dropdown-in {
-  from { opacity: 0; transform: translate(-50%, -36px) scaleY(0.95); }
-  to   { opacity: 1; transform: translate(-50%, 0) scaleY(1); }
-}
-@keyframes dropdown-out {
-  from { opacity: 1; transform: translate(-50%, 0) scaleY(1); }
-  to   { opacity: 0; transform: translate(-50%, -36px) scaleY(0.95); }
-}
-.dropdown-anim-in {
-  animation: dropdown-in 0.3s cubic-bezier(.4,0,.2,1) forwards;
-}
-.dropdown-anim-out {
-  animation: dropdown-out 0.3s cubic-bezier(.4,0,.2,1) forwards;
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}
 }

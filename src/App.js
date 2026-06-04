@@ -1,43 +1,214 @@
-import React from "react";
-import Navbar from "./components/Navbar";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Home from "./components/Home";
 import Experience from "./components/Experience";
 import Projects from "./components/Projects";
+import Resume from "./components/Resume";
 import Contact from "./components/Contact";
-import CustomCursor from "./components/CustomCursor";
-import FadeIn from "./components/FadeIn";
-import ScrollProgress from "./components/ScrollProgress";
-import Aurora from "./components/Aurora";
-import InteractiveBg from "./components/InteractiveBg";
-import Intro from "./components/Intro";
 import "./index.css";
 
+const NAV = [
+  { id: "home", label: "whoami" },
+  { id: "experience", label: "experience" },
+  { id: "projects", label: "projects" },
+  { id: "resume", label: "resume" },
+  { id: "contact", label: "contact" },
+];
+
+// one continuous line-number gutter for the whole buffer (decorative)
+const GUTTER = Array.from({ length: 260 }, (_, i) =>
+  String(i + 1).padStart(2, "0")
+).join("\n");
+
 function App() {
+  const [light, setLight] = useState(
+    () => localStorage.getItem("crt-theme") === "light"
+  );
+  const [active, setActive] = useState("home");
+  const [clock, setClock] = useState("--:--:--");
+  const [on, setOn] = useState(false); // land in standby; visitor powers it on
+  const [interacted, setInteracted] = useState(false);
+  const scrollRef = useRef(null);
+
+  const togglePower = () => {
+    setInteracted(true);
+    setOn((o) => !o);
+  };
+
+  // theme — class on <html>, persisted
+  useEffect(() => {
+    document.documentElement.classList.toggle("light", light);
+    localStorage.setItem("crt-theme", light ? "light" : "dark");
+  }, [light]);
+
+  // live clock
+  useEffect(() => {
+    const fmt = () =>
+      setClock(new Date().toLocaleTimeString("en-US", { hour12: false }));
+    fmt();
+    const id = setInterval(fmt, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  // active-section tracking inside the scroll buffer
+  const onScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const probe = el.scrollTop + 120;
+    let current = NAV[0].id;
+    for (const { id } of NAV) {
+      const node = document.getElementById(id);
+      if (node && node.offsetTop <= probe) current = id;
+    }
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 8) {
+      current = NAV[NAV.length - 1].id;
+    }
+    setActive(current);
+  }, []);
+
+  const goTo = (id) => {
+    const node = document.getElementById(id);
+    if (node) node.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <>
-      <Intro />
-      <CustomCursor />
-      <ScrollProgress />
-      <div className="bg-fade fixed inset-0 -z-10"></div>
-      <Aurora />
-      <InteractiveBg />
-      <div className="noise" aria-hidden />
-      <div className="vignette" aria-hidden />
-      <Navbar />
-      <div className="h-24 md:h-28"></div>
-      <main>
-        <div id="home" className="scroll-section"><FadeIn><Home /></FadeIn></div>
-        <div id="experience" className="scroll-section"><FadeIn><Experience /></FadeIn></div>
-        <div id="projects" className="scroll-section"><FadeIn><Projects /></FadeIn></div>
-        <div id="contact" className="scroll-section"><FadeIn><Contact /></FadeIn></div>
-        <footer className="py-10 text-center text-xs font-mono tracking-wider text-gray-500 dark:text-gray-500">
-          <span className="opacity-70">Built with React + Tailwind · </span>
-          <a href="https://github.com/gss-09" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity">
-            github.com/gss-09
-          </a>
-        </footer>
-      </main>
-    </>
+    <div className="desk">
+      <div className="setup">
+        <div className="monitor">
+          <i className="screw tl" />
+          <i className="screw tr" />
+          <i className="screw bl" />
+          <i className="screw br" />
+
+          <div className="bezel">
+            <div className={"screen" + (on ? "" : " is-off")}>
+              <div
+                className={on ? "crtline on" : interacted ? "crtline off" : "crtline"}
+                aria-hidden
+              />
+              <div className="curve" />
+              <div className="scan" />
+              <div className="glare" />
+              <div className="standby">STANDBY</div>
+
+              <div
+                className={on ? "tube on" : interacted ? "tube off" : "tube off-static"}
+              >
+              {/* prompt nav */}
+              <nav className="crt-nav">
+                <span className="who">
+                  <b>shriyans</b>@<b>portfolio</b>:~$
+                </span>
+                <span className="links">
+                  {NAV.map((n) => (
+                    <button
+                      key={n.id}
+                      className={active === n.id ? "on" : ""}
+                      onClick={() => goTo(n.id)}
+                    >
+                      <span className="br">./</span>
+                      {n.label}
+                    </button>
+                  ))}
+                </span>
+              </nav>
+
+              {/* scrolling buffer */}
+              <div className="crt-scroll" ref={scrollRef} onScroll={onScroll}>
+                <div className="buffer">
+                  <div className="gutter" aria-hidden>{GUTTER}</div>
+                  <Home />
+                  <Experience />
+                  <Projects />
+                  <Resume />
+                  <Contact />
+                  <div className="eof" aria-hidden>
+                    {"~\n~\n~\n~\n~\n~  — end of buffer —"}
+                  </div>
+                </div>
+              </div>
+
+              {/* status bar */}
+              <div className="crt-status">
+                <span className="mode">NORMAL</span>
+                <span className="seg">~/shriyans_sai/portfolio.jsx</span>
+                <span className="sp" />
+                <span className="seg alt">utf-8 · jsx</span>
+                <span className="seg">{active}</span>
+                <span className="clock">{clock}</span>
+              </div>
+              </div>
+            </div>
+          </div>
+
+          {/* casing controls */}
+          <div className="controls">
+            <span className="brand">
+              SHRIYANS<span>{"//OS"}</span>
+            </span>
+            <span className={"led" + (on ? "" : " dead")} title="power" />
+            <span className="ledlabel">PWR</span>
+            <span className="sp" />
+            <span className="vents">
+              <i /><i /><i /><i /><i /><i />
+            </span>
+            <button
+              className="themebtn"
+              onClick={() => setLight((v) => !v)}
+              aria-label="Toggle light/dark"
+            >
+              <span className="ic" />
+              {light ? "LIGHT" : "DARK"}
+            </button>
+            <button
+              className={"pwr" + (on ? " lit" : "")}
+              onClick={togglePower}
+              aria-label={on ? "Power off" : "Power on"}
+              title="Power"
+            >
+              ⏻
+            </button>
+          </div>
+
+          {/* mobile handheld control deck */}
+          <div className="deck">
+            <div className="dpad" aria-hidden>
+              <i className="dv" />
+              <i className="dh" />
+            </div>
+            <div className="deck-mid">
+              <span className="speaker" aria-hidden>
+                <i /><i /><i /><i /><i /><i /><i /><i /><i />
+              </span>
+              <span className="deck-brand">
+                SHRIYANS<span>{"//OS"}</span> · POCKET
+              </span>
+            </div>
+            <div className="deck-actions">
+              <button
+                className="rbtn"
+                onClick={() => setLight((v) => !v)}
+                aria-label="Toggle light/dark"
+              >
+                {light ? "☀" : "☾"}
+              </button>
+              <button
+                className={"rbtn pwr2" + (on ? " lit" : "")}
+                onClick={togglePower}
+                aria-label={on ? "Power off" : "Power on"}
+              >
+                ⏻
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="neck" />
+        <div className="base" />
+        <div className="caption">
+          {"SHRIYANS//OS"} · MODEL SS-2026 · 14&quot; PHOSPHOR DISPLAY
+        </div>
+      </div>
+    </div>
   );
 }
 
