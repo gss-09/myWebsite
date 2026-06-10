@@ -410,6 +410,20 @@ html.light .crt-status .clock{background:#3a2606}
   box-shadow:inset 0 2px 2px rgba(255,255,255,.4),0 22px 30px -14px rgba(0,0,0,.7),inset 0 -4px 6px rgba(0,0,0,.4)}
 .caption{margin-top:20px;color:#8d836a;font-size:11.5px;letter-spacing:.08em;text-align:center}
 html.light .caption{color:#5d626a}
+
+/* ---- site footer ---- */
+.site-footer{margin-top:34px;padding:22px 16px;display:flex;flex-direction:column;
+  align-items:center;gap:9px;border-top:1px solid var(--line);text-align:center}
+.foot-line{font-size:12.5px;letter-spacing:.02em}
+.foot-ps{color:var(--dim);margin-right:8px}
+.foot-ps b{color:var(--amber);font-weight:600}
+.foot-cmd{color:var(--fg)}
+.foot-links{display:flex;align-items:center;gap:10px;font-size:13px}
+.foot-links a{color:var(--amber);text-decoration:none;text-shadow:var(--txt-glow);
+  padding:1px 2px;transition:opacity .15s}
+.foot-links a:hover{opacity:.7;text-decoration:underline}
+.foot-sep{color:var(--dim)}
+.foot-meta{color:var(--dim);font-size:11.5px;letter-spacing:.06em}
 html.light .brand{color:#e2e4e8}
 html.light .brand span{color:#aab0b8}
 html.light .ledlabel{color:#bcc0c6}

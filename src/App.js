@@ -335,6 +335,33 @@ function App() {
           {"SHRIYANS//OS"} · MODEL SS-2026 · 14&quot; PHOSPHOR DISPLAY
         </div>
       </div>
+
+      <footer className="site-footer">
+        <div className="foot-line">
+          <span className="foot-ps">
+            <b>shriyans</b>@<b>portfolio</b>:~$
+          </span>
+          <span className="foot-cmd">echo "thanks for visiting"</span>
+        </div>
+        <nav className="foot-links">
+          <a href="https://github.com/gss-09" target="_blank" rel="noopener noreferrer">
+            github
+          </a>
+          <span className="foot-sep">·</span>
+          <a
+            href="https://www.linkedin.com/in/shriyans-sai/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            linkedin
+          </a>
+          <span className="foot-sep">·</span>
+          <a href="mailto:shriyansai73@gmail.com">email</a>
+        </nav>
+        <div className="foot-meta">
+          © {new Date().getFullYear()} Shriyans Sai · built with React
+        </div>
+      </footer>
     </div>
   );
 }
