@@ -34,6 +34,20 @@ html.light{
   --case:#5b5f67; --case-hi:#7a7f88; --case-lo:#42454c; --case-sh:#2c2e33;
 }
 
+/* phosphor accent presets — `theme green|blue` in the CLI */
+html.acc-green{
+  --amber:#5bd66f; --amber-d:#3a9d4f;
+  --glow-amber:0 0 12px rgba(91,214,111,.5);
+  --glow-amber-strong:0 0 18px rgba(91,214,111,.6),0 0 44px rgba(91,214,111,.22);
+  --txt-glow:0 0 8px rgba(91,214,111,.16);
+}
+html.acc-blue{
+  --amber:#3b9dff; --amber-d:#2a78c8;
+  --glow-amber:0 0 12px rgba(59,157,255,.5);
+  --glow-amber-strong:0 0 18px rgba(59,157,255,.6),0 0 44px rgba(59,157,255,.22);
+  --txt-glow:0 0 8px rgba(59,157,255,.16);
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -197,7 +211,7 @@ html.light .crt-nav button.on{background:rgba(180,83,9,.1)}
 
 /* ---------- Scrolling buffer ---------- */
 .crt-scroll{position:relative;z-index:5;flex:1;overflow-y:auto;overflow-x:hidden;
-  scroll-snap-type:y proximity;scrollbar-width:thin;scrollbar-color:rgba(255,176,0,.3) transparent}
+  scrollbar-width:thin;scrollbar-color:rgba(255,176,0,.3) transparent}
 .crt-scroll::-webkit-scrollbar{width:9px}
 .crt-scroll::-webkit-scrollbar-thumb{background:rgba(255,176,0,.28);border-radius:8px;border:2px solid transparent;background-clip:padding-box}
 html.light .crt-scroll::-webkit-scrollbar-thumb{background:rgba(180,83,9,.35);background-clip:padding-box}
@@ -298,6 +312,56 @@ html.light .pdfbar{background:rgba(0,0,0,.03)}
 .out .arrow{color:var(--dim);margin-right:12px}
 .out .lbl{display:inline-block;width:90px;color:var(--dim)}
 .eof{padding:18px 26px 40px 56px;color:var(--dim);opacity:.4;white-space:pre;font-size:15px;line-height:1.9;user-select:none}
+
+/* ---------- interactive command line ---------- */
+.cli{padding:18px 26px 34px 56px;border-top:1px dashed var(--line);
+  font-size:14.5px;line-height:1.7;cursor:text}
+.cli-line{white-space:pre-wrap;word-break:break-word;margin:1px 0}
+.cli-line.cmd{color:var(--bright)}
+.cli-line.out{color:var(--fg)}
+.cli-line.sys{color:var(--dim)}
+.cli-line.err{color:#ff6f6f}
+html.light .cli-line.err{color:#c0392b}
+.cli-ps{color:var(--green);text-shadow:var(--glow-green)}
+.cli-ps b{color:var(--amber)}
+.cli-k{display:inline-block;width:96px;color:var(--dim)}
+.cli-help div{margin:2px 0}
+.cli-help b{display:inline-block;width:88px;color:var(--amber)}
+.neofetch{color:var(--amber);text-shadow:var(--txt-glow);font-size:12.5px;line-height:1.4;white-space:pre;margin:3px 0;font-family:inherit}
+.cli-input-row{display:flex;align-items:baseline;gap:9px;margin-top:8px}
+.cli-input{flex:1;min-width:0;background:transparent;border:0;outline:0;padding:0;
+  color:var(--fg);font-family:inherit;font-size:14.5px;caret-color:var(--amber)}
+.cli-input::placeholder{color:var(--dim);opacity:.65}
+
+/* matrix easter egg */
+.matrix-canvas{position:absolute;inset:0;z-index:10;width:100%;height:100%;pointer-events:none}
+
+/* ---------- terminal tabs ---------- */
+.tabbar{display:flex;align-items:stretch;min-height:34px;position:relative;z-index:6;
+  background:rgba(0,0,0,.25);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabbar::-webkit-scrollbar{display:none}
+html.light .tabbar{background:rgba(0,0,0,.05)}
+.tab{display:flex;align-items:center;gap:8px;flex:none;height:34px;padding:0 14px;
+  font-family:inherit;font-size:12.5px;color:var(--dim);background:transparent;border:0;
+  border-right:1px solid var(--line);cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--fg)}
+.tab.active{color:var(--amber);background:rgba(255,176,0,.07);box-shadow:inset 0 -2px 0 var(--amber)}
+html.light .tab.active{background:rgba(180,83,9,.08)}
+.tab .tdot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.55}
+.tab.active .tdot{opacity:1;box-shadow:0 0 6px currentColor}
+.tab .tx{margin-left:3px;font-size:14px;line-height:1;opacity:.55;border-radius:3px;padding:0 3px}
+.tab .tx:hover{opacity:1;color:#ff6f6f;background:rgba(255,255,255,.12)}
+.tabadd{flex:none;height:34px;padding:0 14px;font-family:inherit;font-size:16px;line-height:1;
+  color:var(--dim);background:transparent;border:0;border-right:1px solid var(--line);cursor:pointer}
+.tabadd:hover{color:var(--amber)}
+.tabpane{flex:1;min-height:0;flex-direction:column}
+
+/* standalone terminal (a shell tab) — prompt starts at the top, grows downward */
+.cli.standalone{flex:1;min-height:0;overflow-y:auto;border-top:0;padding:18px 24px 24px;
+  scrollbar-width:thin;scrollbar-color:rgba(255,176,0,.3) transparent}
+.cli.standalone::-webkit-scrollbar{width:9px}
+.cli.standalone::-webkit-scrollbar-thumb{background:rgba(255,176,0,.28);border-radius:8px;border:2px solid transparent;background-clip:padding-box}
+.cli.standalone .cli-input-row{margin-top:6px}
 
 /* ---------- Bottom status bar (inside screen) ---------- */
 .crt-status{position:relative;z-index:6;display:flex;align-items:center;font-size:12px;
