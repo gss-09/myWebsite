@@ -32,9 +32,12 @@ function App() {
   const [interacted, setInteracted] = useState(false);
   const [accent, setAccent] = useState("amber"); // phosphor color
   const [matrix, setMatrix] = useState(false);
-  const [tabs, setTabs] = useState([{ id: 0, name: "landing", kind: "landing" }]);
+  const [tabs, setTabs] = useState([
+    { id: 0, name: "landing", kind: "landing" },
+    { id: 1, name: "shell-1", kind: "shell" },
+  ]);
   const [activeTab, setActiveTab] = useState(0);
-  const tabId = useRef(1);
+  const tabId = useRef(2);
   const scrollRef = useRef(null);
   const ticking = useRef(false);
 
@@ -212,7 +215,6 @@ function App() {
                     <Projects />
                     <Resume />
                     <Contact />
-                    <Cli actions={cliActions} inputId="cli-input-0" />
                   </div>
                 </div>
               </div>
