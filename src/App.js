@@ -23,6 +23,7 @@ const GUTTER = Array.from({ length: 260 }, (_, i) =>
 ).join("\n");
 
 function App() {
+  // dark by default; switches to light only if the visitor chose it before
   const [light, setLight] = useState(
     () => localStorage.getItem("crt-theme") === "light"
   );
@@ -70,31 +71,6 @@ function App() {
     if (accent === "green") r.classList.add("acc-green");
     if (accent === "blue") r.classList.add("acc-blue");
   }, [accent]);
-
-  // keyboard navigation (ignored while typing in a CLI input)
-  useEffect(() => {
-    const onKey = (e) => {
-      if (!on) return;
-      const tag = document.activeElement?.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA") return;
-      if (e.key === "/") {
-        e.preventDefault();
-        document.getElementById("cli-input-" + activeTab)?.focus();
-        return;
-      }
-      if (activeTab !== 0) return; // section nav only on the landing tab
-      const el = scrollRef.current;
-      if (!el) return;
-      const idx = NAV.findIndex((n) => n.id === active);
-      if (e.key === "j") goTo(NAV[Math.min(idx + 1, NAV.length - 1)].id);
-      else if (e.key === "k") goTo(NAV[Math.max(idx - 1, 0)].id);
-      else if (e.key >= "1" && e.key <= "5") goTo(NAV[+e.key - 1].id);
-      else if (e.key === "g") el.scrollTo({ top: 0, behavior: "smooth" });
-      else if (e.key === "G") el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [on, active, activeTab]);
 
   // active-section tracking — throttled to one rAF per frame, updates only on change
   const onScroll = useCallback(() => {
@@ -331,37 +307,8 @@ function App() {
 
         <div className="neck" />
         <div className="base" />
-        <div className="caption">
-          {"SHRIYANS//OS"} · MODEL SS-2026 · 14&quot; PHOSPHOR DISPLAY
-        </div>
       </div>
 
-      <footer className="site-footer">
-        <div className="foot-line">
-          <span className="foot-ps">
-            <b>shriyans</b>@<b>portfolio</b>:~$
-          </span>
-          <span className="foot-cmd">echo "thanks for visiting"</span>
-        </div>
-        <nav className="foot-links">
-          <a href="https://github.com/gss-09" target="_blank" rel="noopener noreferrer">
-            github
-          </a>
-          <span className="foot-sep">·</span>
-          <a
-            href="https://www.linkedin.com/in/shriyans-sai/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            linkedin
-          </a>
-          <span className="foot-sep">·</span>
-          <a href="mailto:shriyansai73@gmail.com">email</a>
-        </nav>
-        <div className="foot-meta">
-          © {new Date().getFullYear()} Shriyans Sai · built with React
-        </div>
-      </footer>
     </div>
   );
 }
