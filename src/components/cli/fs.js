@@ -124,9 +124,13 @@ remote  devpost.com/software/owlai
     "README.txt": F(
 `ARCADE — playable right here in the tube.
 
-  play snake     classic snake, phosphor glow
-  play type      typing-speed test (live WPM)
-  play guess     number guessing game
+  play snake      classic snake, phosphor glow
+  play tetris     falling blocks, ghost drop
+  play pong       first to 7 vs the machine
+  play breakout   brick breaker, 3 lives
+  play 2048       merge tiles, charge the phosphor
+  play type       typing-speed test (live WPM)
+  play guess      number guessing game
 
 arrow keys move · esc quits · enter restarts`
     ),

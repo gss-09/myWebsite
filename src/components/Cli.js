@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import Snake from "./cli/Snake";
 import TypingTest from "./cli/TypingTest";
+import Tetris from "./cli/Tetris";
+import Pong from "./cli/Pong";
+import Breakout from "./cli/Breakout";
+import Game2048 from "./cli/Game2048";
 import { FS, resolve, nodeAt } from "./cli/fs";
 
 const COMMANDS = [
@@ -45,6 +49,10 @@ const HELP = [
   ]],
   ["play", [
     ["play snake", "the classic"],
+    ["play tetris", "falling blocks"],
+    ["play pong", "you vs the machine"],
+    ["play breakout", "brick breaker"],
+    ["play 2048", "merge the tiles"],
     ["play type", "typing speed test"],
     ["play guess", "number guessing game"],
   ]],
@@ -350,15 +358,23 @@ export default function Cli({ actions, inputId = "cli-input", standalone = false
       case "play": {
         const which = (args[0] || "").toLowerCase();
         if (which === "snake") launch(<Snake onExit={exitApp} />, "snake");
+        else if (which === "tetris") launch(<Tetris onExit={exitApp} />, "tetris");
+        else if (which === "pong") launch(<Pong onExit={exitApp} />, "pong");
+        else if (which === "breakout" || which === "brick") launch(<Breakout onExit={exitApp} />, "breakout");
+        else if (which === "2048") launch(<Game2048 onExit={exitApp} />, "2048");
         else if (which === "type" || which === "typing") launch(<TypingTest onExit={exitApp} />, "typing test");
         else if (which === "guess") startGuess();
-        else print({ k: "err", c: "usage: play <snake|type|guess>" });
+        else print({ k: "err", c: "usage: play <snake|tetris|pong|breakout|2048|type|guess>" });
         break;
       }
       case "games":
         print({ k: "out", c: (
           <div className="cli-help">
             <div className="hrow"><span className="hcmd">play snake</span><span className="hdesc">arrows / wasd to move</span></div>
+            <div className="hrow"><span className="hcmd">play tetris</span><span className="hdesc">falling blocks, ghost drop</span></div>
+            <div className="hrow"><span className="hcmd">play pong</span><span className="hdesc">first to 7 vs the machine</span></div>
+            <div className="hrow"><span className="hcmd">play breakout</span><span className="hdesc">brick breaker, 3 lives</span></div>
+            <div className="hrow"><span className="hcmd">play 2048</span><span className="hdesc">merge tiles, charge the phosphor</span></div>
             <div className="hrow"><span className="hcmd">play type</span><span className="hdesc">typing speed test</span></div>
             <div className="hrow"><span className="hcmd">play guess</span><span className="hdesc">number guessing game</span></div>
           </div>
