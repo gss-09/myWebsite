@@ -2,84 +2,111 @@ import { useEffect, useRef, useState } from "react";
 
 // 2048 — tiles charge up the phosphor as they merge; hit 2048 and the
 // board goes full glow. Arrows/wasd to slide.
+//
+// Tiles are identity-tracked and absolutely positioned, so moves animate
+// as real slides (CSS transform transition). A move runs in two phases:
+// slide everything, then ~0.1s later collapse merged pairs into their
+// doubled tile and spawn the new one. A fresh keypress flushes the
+// pending phase instantly so fast play never waits on the animation.
 const SIZE = 4;
+const TILE = 64, GAP = 7, CELL = TILE + GAP;
+const SLIDE_MS = 110;
 
-// index paths for each direction — slide() compresses along these
-const row = (r) => [0, 1, 2, 3].map((c) => r * SIZE + c);
-const col = (c) => [0, 1, 2, 3].map((r) => r * SIZE + c);
-const LINES = {
-  left: [0, 1, 2, 3].map(row),
-  right: [0, 1, 2, 3].map((r) => row(r).reverse()),
-  up: [0, 1, 2, 3].map(col),
-  down: [0, 1, 2, 3].map((c) => col(c).reverse()),
+let uid = 1;
+const nid = () => uid++;
+
+const spawnTile = (tiles) => {
+  const used = new Set(tiles.map((t) => t.r * SIZE + t.c));
+  const free = [...Array(SIZE * SIZE).keys()].filter((i) => !used.has(i));
+  if (!free.length) return null;
+  const i = free[(Math.random() * free.length) | 0];
+  return { id: nid(), v: Math.random() < 0.9 ? 2 : 4, r: (i / SIZE) | 0, c: i % SIZE, state: "new" };
 };
 
-const addTile = (b) => {
-  const empty = b.map((v, i) => (v ? -1 : i)).filter((i) => i >= 0);
-  if (!empty.length) return null;
-  const i = empty[(Math.random() * empty.length) | 0];
-  const nb = [...b];
-  nb[i] = Math.random() < 0.9 ? 2 : 4;
-  return { board: nb, spawned: i };
+const freshTiles = () => {
+  const ts = [];
+  ts.push(spawnTile(ts));
+  ts.push(spawnTile(ts));
+  return ts;
 };
 
-const freshBoard = () => {
-  let b = Array(SIZE * SIZE).fill(0);
-  b = addTile(b).board;
-  b = addTile(b).board;
-  return b;
-};
-
-// slide every line toward its head; returns null when nothing moved
-const slide = (b, dir) => {
-  const nb = [...b];
+// slide all tiles toward `dir`; returns null when nothing moves
+const moveTiles = (tiles, dir) => {
+  const horiz = dir === "left" || dir === "right";
+  const fwd = dir === "left" || dir === "up";
+  const cell = (line, pos) => (horiz ? { r: line, c: pos } : { r: pos, c: line });
   let moved = false, gained = 0;
-  const merged = [];
-  for (const line of LINES[dir]) {
-    const vals = line.map((i) => b[i]).filter((v) => v);
-    const out = [];
-    for (let i = 0; i < vals.length; i++) {
-      if (vals[i] === vals[i + 1]) {
-        out.push(vals[i] * 2);
-        gained += vals[i] * 2;
-        merged.push(line[out.length - 1]);
-        i++;
-      } else out.push(vals[i]);
-    }
-    for (let i = 0; i < line.length; i++) {
-      const v = out[i] || 0;
-      if (nb[line[i]] !== v) moved = true;
-      nb[line[i]] = v;
+  const out = [], merges = [];
+  for (let line = 0; line < SIZE; line++) {
+    const lane = tiles
+      .filter((t) => (horiz ? t.r : t.c) === line)
+      .sort((a, b) => (horiz ? a.c - b.c : a.r - b.r));
+    if (!fwd) lane.reverse();
+    let pos = fwd ? 0 : SIZE - 1;
+    const step = fwd ? 1 : -1;
+    let prev = null; // last placed tile that hasn't merged yet
+    for (const t of lane) {
+      if (prev && prev.v === t.v) {
+        // ride onto prev's cell; both collapse into one tile in phase two
+        out.push({ ...t, r: prev.r, c: prev.c, state: "idle" });
+        merges.push({ ids: [prev.id, t.id], r: prev.r, c: prev.c, v: t.v * 2 });
+        gained += t.v * 2;
+        moved = true;
+        prev = null;
+      } else {
+        const { r, c } = cell(line, pos);
+        pos += step;
+        if (r !== t.r || c !== t.c) moved = true;
+        const nt = { ...t, r, c, state: "idle" };
+        out.push(nt);
+        prev = nt;
+      }
     }
   }
-  return moved ? { board: nb, gained, merged } : null;
+  return moved ? { tiles: out, merges, gained } : null;
 };
 
-const stuck = (b) =>
-  b.every((v) => v) && !["left", "right", "up", "down"].some((d) => slide(b, d));
+const noMoves = (tiles) => {
+  if (tiles.length < SIZE * SIZE) return false;
+  const grid = Array(SIZE * SIZE).fill(0);
+  tiles.forEach((t) => { grid[t.r * SIZE + t.c] = t.v; });
+  for (let r = 0; r < SIZE; r++)
+    for (let c = 0; c < SIZE; c++) {
+      const v = grid[r * SIZE + c];
+      if (c + 1 < SIZE && grid[r * SIZE + c + 1] === v) return false;
+      if (r + 1 < SIZE && grid[(r + 1) * SIZE + c] === v) return false;
+    }
+  return true;
+};
 
 export default function Game2048({ onExit }) {
-  const [board, setBoard] = useState(freshBoard);
+  const [tiles, setTiles] = useState(freshTiles);
   const [score, setScore] = useState(0);
   const [over, setOver] = useState(false);
   const [won, setWon] = useState(false);
   const [going, setGoing] = useState(false); // keep playing past 2048
-  const [pops, setPops] = useState([]);      // indices that just spawned/merged
-  const [moveN, setMoveN] = useState(0);     // remounts popped cells so the animation retriggers
   // mutable mirrors so the key handler never works from a stale closure
-  const boardRef = useRef(board);
+  const tilesRef = useRef(tiles);
   const scoreRef = useRef(0);
+  const pending = useRef(null); // { timer, finalize } for the merge/spawn phase
 
   useEffect(() => {
+    const flush = () => {
+      if (!pending.current) return;
+      clearTimeout(pending.current.timer);
+      pending.current.finalize();
+    };
+
     const onKey = (e) => {
       const k = e.key;
       if (k === "Escape") return onExit(`2048 — score ${scoreRef.current}`);
       if (k === "Enter") {
         if (over) {
-          boardRef.current = freshBoard();
+          flush();
+          tilesRef.current = freshTiles();
           scoreRef.current = 0;
-          setBoard(boardRef.current); setScore(0);
-          setOver(false); setWon(false); setGoing(false); setPops([]);
+          setTiles(tilesRef.current); setScore(0);
+          setOver(false); setWon(false); setGoing(false);
         } else if (won && !going) setGoing(true);
         return;
       }
@@ -91,25 +118,37 @@ export default function Game2048({ onExit }) {
         k === "ArrowDown" || k === "s" ? "down" : null;
       if (!dir) return;
       e.preventDefault();
-      const res = slide(boardRef.current, dir);
+      flush();
+      const res = moveTiles(tilesRef.current, dir);
       if (!res) return;
-      const add = addTile(res.board);
-      const nb = add ? add.board : res.board;
-      boardRef.current = nb;
-      scoreRef.current += res.gained;
-      setBoard(nb);
-      setScore(scoreRef.current);
-      setPops([...res.merged, ...(add ? [add.spawned] : [])]);
-      setMoveN((m) => m + 1);
-      if (nb.includes(2048)) setWon(true);
-      if (stuck(nb)) setOver(true);
+      // phase one: everything slides (merging pairs ride to the same cell)
+      tilesRef.current = res.tiles;
+      setTiles(res.tiles);
+      // phase two: collapse merges, pop the spawn, settle the score
+      const finalize = () => {
+        pending.current = null;
+        const dead = new Set(res.merges.flatMap((m) => m.ids));
+        let ts = tilesRef.current.filter((t) => !dead.has(t.id));
+        ts = ts.concat(res.merges.map((m) => ({ id: nid(), v: m.v, r: m.r, c: m.c, state: "merged" })));
+        const spawn = spawnTile(ts);
+        if (spawn) ts = ts.concat(spawn);
+        tilesRef.current = ts;
+        scoreRef.current += res.gained;
+        setTiles(ts);
+        setScore(scoreRef.current);
+        if (ts.some((t) => t.v >= 2048)) setWon(true);
+        if (noMoves(ts)) setOver(true);
+      };
+      pending.current = { finalize, timer: setTimeout(finalize, SLIDE_MS) };
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [over, won, going, onExit]);
 
-  const tileClass = (v) =>
-    !v ? "" : v >= 2048 ? " tmax" : ` t${v}`;
+  // clear any in-flight phase-two timer on unmount
+  useEffect(() => () => pending.current && clearTimeout(pending.current.timer), []);
+
+  const tileClass = (v) => (v >= 2048 ? " tmax" : ` t${v}`);
 
   return (
     <div className="game g2048">
@@ -119,13 +158,19 @@ export default function Game2048({ onExit }) {
         <span className="g-keys">arrows/wasd slide · esc quit</span>
       </div>
       <div className="game-stage b2048">
-        <div className="grid2048">
-          {board.map((v, i) => (
+        <div className="board2048">
+          {Array.from({ length: SIZE * SIZE }).map((_, i) => (
+            <div key={i} className="bcell2048" />
+          ))}
+          {tiles.map((t) => (
             <div
-              key={v && pops.includes(i) ? `${i}.${moveN}` : i}
-              className={"cell2048" + tileClass(v) + (v && pops.includes(i) ? " pop" : "")}
+              key={t.id}
+              className="tile2048"
+              style={{ transform: `translate(${t.c * CELL}px, ${t.r * CELL}px)` }}
             >
-              {v || ""}
+              <div className={"tin" + tileClass(t.v) + (t.state !== "idle" ? " pop" : "")}>
+                {t.v}
+              </div>
             </div>
           ))}
         </div>
