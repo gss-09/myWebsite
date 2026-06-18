@@ -147,7 +147,7 @@ export default function Intro() {
                       position: "absolute",
                       inset: 0,
                       borderRadius: "50%",
-                      boxShadow: "0 0 28px rgba(255,255,255,0.75), 0 0 70px rgba(168,85,247,0.6), 0 0 140px rgba(56,189,248,0.4)"
+                      boxShadow: "0 0 24px rgba(255,255,255,0.8), 0 0 64px rgba(255,255,255,0.45), 0 0 130px rgba(255,255,255,0.22)"
                     }}
                     animate={{ opacity: [1, 1, 0] }}
                     transition={{
@@ -188,18 +188,15 @@ export default function Intro() {
                     key={i}
                     style={{
                       display: "inline-block",
-                      background:
-                        "linear-gradient(135deg, #38bdf8 0%, #a855f7 50%, #f472b6 100%)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
+                      color: "#f7f7f5",
+                      textShadow: "0 0 22px rgba(255,255,255,0.35)",
                       willChange: "transform, opacity",
                     }}
-                    initial={{ opacity: 0, scale: 0.3, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     transition={{
-                      delay: 2.8 + i * 0.08,
-                      duration: 0.1,
+                      delay: 2.85 + i * 0.07,
+                      duration: 0.6,
                       ease: [0.16, 1, 0.3, 1],
                     }}
                   >

@@ -210,7 +210,11 @@ html.light .crt-nav button.on{background:rgba(180,83,9,.1)}
 .crt-nav button .br{color:var(--amber-d);opacity:.7}
 
 /* ---------- Scrolling buffer ---------- */
-.crt-scroll{position:relative;z-index:5;flex:1;overflow-y:auto;overflow-x:hidden;
+/* no z-index here: a stacking context would trap the hero photo below the
+   scan/glare overlays. Without it, the photo's z-index:10 reaches the screen
+   layer and sits above the CRT overlays. Content is still clipped to this
+   scroll box, so nothing escapes the tube visually. */
+.crt-scroll{position:relative;flex:1;overflow-y:auto;overflow-x:hidden;
   scrollbar-width:thin;scrollbar-color:rgba(255,176,0,.3) transparent}
 .crt-scroll::-webkit-scrollbar{width:9px}
 .crt-scroll::-webkit-scrollbar-thumb{background:rgba(255,176,0,.28);border-radius:8px;border:2px solid transparent;background-clip:padding-box}

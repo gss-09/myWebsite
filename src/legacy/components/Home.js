@@ -1,5 +1,4 @@
 import React from "react";
-import RotatingTitle from "./RotatingTitle";
 import SkillsMarquee from "./SkillsMarquee";
 
 function Home() {
@@ -12,27 +11,29 @@ function Home() {
           <div className="relative flex-shrink-0">
             <div
               aria-hidden
-              className="absolute -inset-1.5 rounded-2xl opacity-60 blur-xl
-                bg-gradient-to-tr from-sky-400 via-purple-400 to-pink-400"
+              className="absolute -inset-1 rounded-2xl opacity-70 blur-2xl
+                bg-gradient-to-tr from-gray-300/40 to-gray-500/10
+                dark:from-white/10 dark:to-white/0"
             />
             <img
               src="/photo.jpg"
               alt="Shriyans Sai"
-              className="relative w-36 h-48 sm:w-44 sm:h-56 rounded-2xl object-cover shadow-lg border border-gray-200 dark:border-gray-700"
+              className="relative w-36 h-48 sm:w-44 sm:h-56 rounded-2xl object-cover shadow-xl
+                border border-gray-200 dark:border-white/10
+                ring-1 ring-amber-500/30"
             />
           </div>
           <div className="text-center sm:text-left flex-1">
             <div className="text-xs font-mono tracking-[0.25em] uppercase text-gray-500 dark:text-gray-400 mb-2">
               Hello world
             </div>
-            <h1 className="text-3xl sm:text-5xl font-extrabold mb-3 leading-tight">
-              I'm{" "}
-              <span className="bg-gradient-to-r from-sky-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Shriyans Sai
-              </span>
+            <h1 className="text-3xl sm:text-5xl font-extrabold mb-3 leading-tight text-gray-900 dark:text-white">
+              I'm Shriyans Sai
             </h1>
-            <div className="text-lg sm:text-2xl mb-4 min-h-[1.8em]">
-              <RotatingTitle />
+            <div className="text-lg sm:text-2xl mb-4 font-medium text-gray-700 dark:text-gray-300">
+              <span className="text-amber-600 dark:text-amber-400 font-semibold">AI / ML researcher</span>
+              <span className="mx-2 text-gray-400 dark:text-gray-600">·</span>
+              full-stack engineer
             </div>
             <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
               CS Junior at the University of Houston &mdash; building things at the intersection of AI, machine learning, and software engineering.
@@ -64,7 +65,7 @@ function Home() {
             onMouseLeave={() => window.dispatchEvent(new Event("cursorshow"))}
           >
             <iframe
-              src="/resume.pdf?v=2"
+              src="/resume.pdf?v=3"
               title="Shriyans Sai Resume"
               className="w-full"
               style={{ height: "780px" }}
@@ -72,7 +73,7 @@ function Home() {
           </div>
           <div className="mt-4 text-center">
             <a
-              href="/resume.pdf?v=2"
+              href="/resume.pdf?v=3"
               download
               className="inline-block px-6 py-2 rounded-lg font-semibold
                 bg-black text-white dark:bg-white dark:text-black
