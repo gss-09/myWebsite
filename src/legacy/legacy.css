@@ -1,0 +1,247 @@
+/* =====================================================================
+   LEGACY (pre-skeuomorphism) portfolio styles — phones only.
+   Restored from commit 084ef9b. @tailwind directives intentionally
+   omitted (they live in src/index.css). Global element rules are scoped
+   under .legacy-root so this sheet can't leak into the skeuo desktop view
+   if a visitor resizes from a narrow to a wide viewport.
+   ===================================================================== */
+
+/* ---------- Custom scrollbar (scoped to the legacy subtree) ---------- */
+.legacy-root ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.legacy-root ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.legacy-root ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background 0.2s ease;
+}
+.legacy-root ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+  background-clip: padding-box;
+}
+html.dark .legacy-root ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.28);
+  background-clip: padding-box;
+}
+html.dark .legacy-root ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+  background-clip: padding-box;
+}
+
+/* ---------- Background (off-pure for less harshness) ---------- */
+.bg-fade {
+  transition: background 0.6s cubic-bezier(.4,0,.2,1);
+  background: #fafafa;
+}
+.dark .bg-fade {
+  background: #0a0a0a;
+}
+
+/* ---------- Body & typography (scoped to the legacy root) ---------- */
+.legacy-root {
+  color: #111;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Helvetica Neue', sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  box-sizing: border-box;
+  transition:
+    color 0.3s cubic-bezier(.4,0,.2,1),
+    background 0.3s cubic-bezier(.4,0,.2,1);
+}
+.dark .legacy-root {
+  color: #f5f5f5;
+}
+
+.legacy-root h1, .legacy-root h2, .legacy-root h3,
+.legacy-root h4, .legacy-root h5, .legacy-root h6 {
+  letter-spacing: -0.022em;
+  font-feature-settings: 'ss01', 'cv11';
+}
+.legacy-root p {
+  letter-spacing: -0.005em;
+}
+
+/* Text selection */
+.legacy-root ::selection {
+  background: rgba(168, 85, 247, 0.30);
+  color: inherit;
+}
+.dark .legacy-root ::selection {
+  background: rgba(168, 85, 247, 0.45);
+}
+
+/* Hide native cursor only when the custom cursor is actually rendering
+   AND the device has a fine pointer. Touch devices and iframe hovers
+   (where the custom cursor is hidden) get the native cursor back. */
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor-active .legacy-root,
+  html.custom-cursor-active .legacy-root *,
+  html.custom-cursor-active .legacy-root *::before,
+  html.custom-cursor-active .legacy-root *::after {
+    cursor: none !important;
+  }
+}
+
+/* ---------- Transitions on interactive elements ---------- */
+.legacy-root a,
+.legacy-root button,
+.legacy-root [role="button"],
+.legacy-root .clickable {
+  transition:
+    color 0.3s cubic-bezier(.4,0,.2,1),
+    background 0.3s cubic-bezier(.4,0,.2,1),
+    border-color 0.3s cubic-bezier(.4,0,.2,1),
+    text-decoration-color 0.3s cubic-bezier(.4,0,.2,1),
+    transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+/* Subtler hover scale */
+@media (min-width: 768px) {
+  .legacy-root a:hover,
+  .legacy-root button:hover,
+  .legacy-root [role="button"]:hover,
+  .legacy-root .clickable:hover {
+    transform: scale(1.05);
+  }
+}
+
+.legacy-root .social-link {
+  transition:
+    color 0.2s linear,
+    background 0.2s linear,
+    border-color 0.2s linear,
+    text-decoration-color 0.2s linear,
+    transform 0.2s linear !important;
+}
+@media (min-width: 768px) {
+  .legacy-root .social-link:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* ---------- Box-sizing & reset (scoped) ---------- */
+.legacy-root *, .legacy-root *::before, .legacy-root *::after {
+  box-sizing: border-box;
+}
+.legacy-root .scroll-section {
+  scroll-margin-top: 6rem;
+}
+
+/* ---------- Aurora background blobs (atmospheric, not loud) ---------- */
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.30;
+  will-change: transform;
+}
+.dark .aurora-blob {
+  opacity: 0.22;
+}
+.aurora-blob-1 {
+  width: 600px;
+  height: 600px;
+  top: -180px;
+  left: -180px;
+  background: radial-gradient(circle, #38bdf8 0%, transparent 70%);
+  animation: aurora-float-1 22s ease-in-out infinite;
+}
+.aurora-blob-2 {
+  width: 540px;
+  height: 540px;
+  top: 28%;
+  right: -200px;
+  background: radial-gradient(circle, #a855f7 0%, transparent 70%);
+  animation: aurora-float-2 26s ease-in-out infinite;
+}
+.aurora-blob-3 {
+  width: 500px;
+  height: 500px;
+  bottom: -180px;
+  left: 28%;
+  background: radial-gradient(circle, #f472b6 0%, transparent 70%);
+  animation: aurora-float-3 30s ease-in-out infinite;
+}
+
+/* ---------- Film-grain noise overlay ---------- */
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dark .noise {
+  opacity: 0.12;
+}
+
+/* ---------- Edge vignette (focuses the eye on the center) ---------- */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.18) 100%
+  );
+}
+.dark .vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+@keyframes aurora-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(80px, 60px) scale(1.1); }
+}
+@keyframes aurora-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-60px, 40px) scale(1.15); }
+}
+@keyframes aurora-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(40px, -50px) scale(1.1); }
+}
+
+/* ---------- Skills marquee ---------- */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-rev {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* ---------- Mobile dropdown animations ---------- */
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translate(-50%, -36px) scaleY(0.95); }
+  to   { opacity: 1; transform: translate(-50%, 0) scaleY(1); }
+}
+@keyframes dropdown-out {
+  from { opacity: 1; transform: translate(-50%, 0) scaleY(1); }
+  to   { opacity: 0; transform: translate(-50%, -36px) scaleY(0.95); }
+}
+.dropdown-anim-in {
+  animation: dropdown-in 0.3s cubic-bezier(.4,0,.2,1) forwards;
+}
+.dropdown-anim-out {
+  animation: dropdown-out 0.3s cubic-bezier(.4,0,.2,1) forwards;
+}
