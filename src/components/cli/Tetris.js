@@ -275,11 +275,16 @@ export default function Tetris({ onExit }) {
       ctx.fillText("NEXT", px, cell * 1.2);
       ctx.strokeStyle = GB[0];
       ctx.lineWidth = 2;
-      ctx.strokeRect(px - cell * 0.2, cell * 1.5, cell * 3.8, cell * 3.2);
+      // box flush with the text column; piece centered inside it
+      const bw = cell * 3.6, bh = cell * 3.2;
+      ctx.strokeRect(px, cell * 1.5, bw, bh);
       const nm = SHAPES[g.next];
+      const s = cell * 0.8;
+      const ox = px + (bw - nm[0].length * s + 2) / 2;
+      const oy = cell * 1.5 + (bh - nm.length * s + 2) / 2;
       nm.forEach((row, r) => row.forEach((v, c) => {
         if (v) {
-          const s = cell * 0.8, X = px + c * s + cell * 0.15, Y = cell * 2 + r * s;
+          const X = ox + c * s, Y = oy + r * s;
           ctx.fillStyle = GB[0];
           ctx.fillRect(X, Y, s - 2, s - 2);
           ctx.fillStyle = GB[2];

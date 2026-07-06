@@ -438,7 +438,7 @@ html.light .cli-line.err{color:#c0392b}
 .cab-gb .g-title{color:#8bac0f}
 .cab-gb .g-score{color:#6f8a20}
 .cab-gb .game-stage{background:#b6b2a8;padding:26px 16px 22px;
-  border-radius:10px 10px 42px 10px;border:1px solid #86827a}
+  border-radius:10px;border:1px solid #86827a}
 .cab-gb .gb-caption{position:absolute;top:8px;left:0;right:0;text-align:center;
   font-size:8px;letter-spacing:.24em;color:#565a86;font-weight:700}
 /* the screen wrapper owns bezel + radius; overlays fill it, so they line up
