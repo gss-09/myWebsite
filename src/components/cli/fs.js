@@ -51,18 +51,21 @@ instagram   @shriyans_sai09
 University of Houston · Advisor: Prof. Sen Lin
 2026.01 → now
 
-Awarded the SURF scholarship to study whether
-world-model architectures (e.g. DreamerV3) can be
-adapted for time-series prediction — training and
-benchmarking adapted models vs. traditional methods.`
+Awarded a competitive $4,000 SURF fellowship to see
+whether world models apply to time-series forecasting.
+Built a PyTorch DreamerV3 RSSM for uni/multivariate
+forecasting; a rolling-origin method cut 120-step MSE
+from 0.93 to 0.18 — up to 20× lower error than naive
+baselines on structured signals.`
     ),
     "math-tutor.txt": F(
 `[work]  Mathematics Tutor
-University of Houston · 2024.08 → now
+University of Houston · 2024.08 → 26.05
 
-Tutor 5–10 students daily in Pre-Calculus,
+Tutored 5–10 students daily in Pre-Calculus,
 Calculus I & II, Statistics, and Engineering Math;
-tailor sessions to diverse learning styles.`
+strengthened problem-solving through adaptive
+teaching, tailoring sessions to diverse learners.`
     ),
     "ieee-coordinator.txt": F(
 `[lead]  Events Coordinator
@@ -76,9 +79,11 @@ other student orgs.`
 `[work]  Generative AI & LLM Intern
 Ideabytes Inc. · 2025.05 → 07
 
-Researched open-source LLMs for local deployment and
-built a prototype voice assistant for real-time
-responses.`
+Benchmarked open-source LLMs on company hardware by
+inference speed, resource use, and response quality;
+engineered a real-time voice assistant on local LLMs;
+built RAG systems answering from company documents
+and internal knowledge bases.`
     ),
   }),
 

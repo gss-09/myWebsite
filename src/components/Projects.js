@@ -96,7 +96,6 @@ export default function Projects() {
           <div className="commit" key={p.name}>
             <div className="chead">
               <span className="cmeta">
-                <span className="hash">{p.hash}</span>{" "}
                 <h3>{p.name}</h3>
                 {p.ref && <span className="ref"> {p.ref}</span>}
               </span>

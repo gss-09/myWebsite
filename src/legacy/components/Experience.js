@@ -21,15 +21,15 @@ const experiences = [
     org: "University of Houston · Advisor: Prof. Sen Lin",
     dates: "Jan 2026 – Present",
     description:
-      "Awarded the SURF undergraduate research scholarship to study whether world model architectures (e.g. DreamerV3) can be adapted for time series prediction. Reading literature on world models and sequential modeling, then training and benchmarking adapted architectures against traditional time series methods. The broader goal is to bridge ideas from reinforcement learning and representation learning with real-world sequential data applications.",
+      "Awarded a competitive $4,000 Summer Undergraduate Research Fellowship (SURF) to investigate whether world models can be applied to time-series forecasting. Built a PyTorch implementation of DreamerV3's RSSM for univariate and multivariate time-series forecasting, and developed a rolling-origin forecasting method that reduced 120-step forecast MSE from 0.93 to 0.18 — up to 20× lower error than naive baselines on structured signals.",
   },
   {
     type: "Work",
     role: "Mathematics Tutor",
     org: "University of Houston",
-    dates: "Aug 2024 – Present",
+    dates: "Aug 2024 – May 2026",
     description:
-      "Tutor 5–10 students daily in Pre-Calculus, Calculus I & II, Statistics, and Engineering Math. Tailor sessions to diverse learning styles to strengthen problem-solving and conceptual understanding, and build student confidence and academic performance.",
+      "Tutored 5–10 students daily in Pre-Calculus, Calculus I & II, Statistics, and Engineering Math. Strengthened problem-solving abilities and conceptual understanding through adaptive teaching, and tailored sessions to diverse learning styles to build student confidence and academic performance.",
   },
   {
     type: "Leadership",
@@ -45,7 +45,7 @@ const experiences = [
     org: "Ideabytes Inc.",
     dates: "May 2025 – Jul 2025",
     description:
-      "Researched open-source LLMs with a focus on local deployment and optimization for personal computing environments. Built a prototype voice assistant for real-time LLM responses and prototyped interactive generative AI applications.",
+      "Benchmarked and analyzed multiple open-source LLMs on company-provided hardware to identify optimal models based on inference speed, resource utilization, and response quality. Engineered a real-time voice assistant using local LLMs and speech-processing pipelines, and built Retrieval-Augmented Generation (RAG) systems that enabled LLMs to answer questions using company documents and internal knowledge bases.",
   },
 ];
 

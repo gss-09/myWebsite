@@ -6,14 +6,14 @@ const experiences = [
     role: "Undergraduate Researcher — SURF Scholar",
     org: "University of Houston · Advisor: Prof. Sen Lin",
     date: "2026.01 → now",
-    body: "Awarded the SURF scholarship to study whether world-model architectures (e.g. DreamerV3) can be adapted for time-series prediction — training and benchmarking adapted models against traditional methods.",
+    body: "Awarded a competitive $4,000 Summer Undergraduate Research Fellowship (SURF) to investigate whether world models can be applied to time-series forecasting. Built a PyTorch implementation of DreamerV3's RSSM for univariate and multivariate forecasting, and developed a rolling-origin method that cut 120-step forecast MSE from 0.93 to 0.18 — up to 20× lower error than naive baselines on structured signals.",
   },
   {
     type: "work",
     role: "Mathematics Tutor",
     org: "University of Houston",
-    date: "2024.08 → now",
-    body: "Tutor 5–10 students daily in Pre-Calculus, Calculus I & II, Statistics, and Engineering Math; tailor sessions to diverse learning styles.",
+    date: "2024.08 → 26.05",
+    body: "Tutor 5–10 students daily in Pre-Calculus, Calculus I & II, Statistics, and Engineering Math; strengthen problem-solving and conceptual understanding through adaptive teaching, tailoring sessions to diverse learning styles.",
   },
   {
     type: "lead",
@@ -27,7 +27,7 @@ const experiences = [
     role: "Generative AI & LLM Intern",
     org: "Ideabytes Inc.",
     date: "2025.05 → 07",
-    body: "Researched open-source LLMs for local deployment and built a prototype voice assistant for real-time responses.",
+    body: "Benchmarked open-source LLMs on company hardware to find the best by inference speed, resource use, and response quality; engineered a real-time voice assistant using local LLMs and speech-processing pipelines; and built Retrieval-Augmented Generation (RAG) systems that answer questions from company documents and internal knowledge bases.",
   },
 ];
 

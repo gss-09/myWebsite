@@ -64,9 +64,11 @@ html.light body{background:radial-gradient(125% 120% at 50% -10%, #f3ecdb 0%, #e
 .monitor,.screen,.bezel,.crt-status,.banner,.amber,.green,.commit::before{
   transition:background-color .5s ease,color .5s ease,border-color .5s ease,box-shadow .5s ease,text-shadow .5s ease}
 
-a{color:var(--amber);text-decoration:none;border-bottom:1px dotted rgba(255,176,0,.4)}
-a:hover{color:var(--bright);border-bottom-color:var(--bright)}
-html.light a{border-bottom-color:rgba(180,83,9,.45)}
+/* scoped to .desk so the amber/dotted link look doesn't leak into the
+   legacy mobile view (.legacy-root), which loads this same global stylesheet */
+.desk a{color:var(--amber);text-decoration:none;border-bottom:1px dotted rgba(255,176,0,.4)}
+.desk a:hover{color:var(--bright);border-bottom-color:var(--bright)}
+html.light .desk a{border-bottom-color:rgba(180,83,9,.45)}
 
 /* desk grain — small tiled noise (NOT a full-viewport feTurbulence, which
    re-rasterizes the whole filter on every zoom step and causes glitching) */
@@ -302,7 +304,7 @@ html.light .ltag.t-lead{color:#9a4708}
   background:var(--screen-bg);border:2px solid var(--amber);box-shadow:var(--glow-amber)}
 .commit .hash{color:var(--amber);text-shadow:var(--glow-amber)}
 .commit .ref{color:var(--green);font-size:12.5px}
-.commit h3{display:inline;color:var(--bright);font-weight:700;font-size:17px}
+.commit h3{display:inline;color:var(--bright);font-weight:700;font-size:17px;text-transform:uppercase;letter-spacing:.04em}
 .commit .body{color:var(--fg);margin:6px 0 7px;max-width:64ch;font-size:14.5px;line-height:1.7}
 .commit .remote{font-size:13.5px;margin:0 0 8px}
 .commit .tags span{color:var(--dim);font-size:13px;margin-right:14px}
