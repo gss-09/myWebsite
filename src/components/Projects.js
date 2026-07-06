@@ -13,8 +13,11 @@ const projects = [
         at a college in India with 2,000–3,000 students</span>. Hostel bed
         management, exams &amp; marks with Excel import/export, maintenance
         ticketing, a parent portal, per-module permissions with campus-level
-        scoping and a full audit log. Public repo is a sanitized fork seeded
-        with fictional data.
+        scoping and a full audit log. Marks arrive as{" "}
+        <span className="amber">messy real-world spreadsheets</span> — the
+        importer normalizes inconsistent names and duplicate roll numbers and
+        flags bad rows instead of choking on them. Public repo is a sanitized
+        fork seeded with fictional data.
       </>
     ),
     remote: "https://github.com/gss-09/college-connect-demo",
@@ -94,8 +97,8 @@ export default function Projects() {
             <div className="chead">
               <span className="cmeta">
                 <span className="hash">{p.hash}</span>{" "}
-                {p.ref && <span className="ref">{p.ref} </span>}
                 <h3>{p.name}</h3>
+                {p.ref && <span className="ref"> {p.ref}</span>}
               </span>
               <span className="cdate">{p.date}</span>
             </div>

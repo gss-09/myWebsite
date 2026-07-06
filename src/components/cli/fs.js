@@ -93,6 +93,9 @@ RUNNING IN PRODUCTION at a college in India with
 2,000–3,000 students. Hostel beds, exams & marks
 (Excel import/export), maintenance tickets, parent
 portal, per-module permissions + full audit log.
+Marks arrive as messy real-world spreadsheets; the
+importer normalizes names + duplicate roll numbers
+and flags bad rows instead of choking on them.
 Public repo is a sanitized fork, fictional data.
 
 stack   python · flask · postgres · vanilla-js

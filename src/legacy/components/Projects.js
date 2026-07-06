@@ -5,7 +5,7 @@ const projects = [
   {
     name: "College Connect",
     description:
-      "Multi-campus college administration platform, custom-built to a real client's requirements and running in production at a college in India with 2,000–3,000 students. Handles hostel bed management, exams & marks with Excel import/export, maintenance ticketing, a read-only parent portal, and per-module permissions with campus-level scoping and a full audit trail — one system replacing spreadsheets and paper registers, used daily by staff and parents. The public demo is a sanitized fork seeded with fictional data.",
+      "Multi-campus college administration platform, custom-built to a real client's requirements and running in production at a college in India with 2,000–3,000 students. Handles hostel bed management, exams & marks with Excel import/export, maintenance ticketing, a read-only parent portal, and per-module permissions with campus-level scoping and a full audit trail — one system replacing spreadsheets and paper registers, used daily by staff and parents. Marks arrive as messy real-world spreadsheets, so the importer normalizes inconsistent names and duplicate roll numbers and flags bad rows instead of choking on them. The public demo is a sanitized fork seeded with fictional data.",
     tech: ["Python", "Flask", "PostgreSQL", "Vanilla JS", "Vercel"],
     links: [
       { label: "GitHub ↗", href: "https://github.com/gss-09/college-connect-demo" },
