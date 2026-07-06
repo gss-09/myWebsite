@@ -52,12 +52,12 @@ const HELP = [
     ["contact", "get in touch"],
   ]],
   ["play", [
-    ["play snake", "the classic"],
-    ["play tetris", "falling blocks"],
-    ["play pong", "you vs the machine"],
-    ["play breakout", "brick breaker"],
-    ["play 2048", "merge the tiles"],
-    ["play type", "typing speed test"],
+    ["play snake", "nokia 3310 lcd"],
+    ["play tetris", "game boy dmg"],
+    ["play pong", "1972 · first to 7"],
+    ["play breakout", "atari rainbow wall"],
+    ["play 2048", "heat-ramp merge puzzle"],
+    ["play type", "teletype speed test"],
     ["play guess", "number guessing game"],
   ]],
   ["links", [
@@ -374,12 +374,12 @@ export default function Cli({ actions, inputId = "cli-input", standalone = false
       case "games":
         print({ k: "out", c: (
           <div className="cli-help">
-            <div className="hrow"><span className="hcmd">play snake</span><span className="hdesc">arrows / wasd to move</span></div>
-            <div className="hrow"><span className="hcmd">play tetris</span><span className="hdesc">falling blocks, ghost drop</span></div>
-            <div className="hrow"><span className="hcmd">play pong</span><span className="hdesc">first to 7 vs the machine</span></div>
-            <div className="hrow"><span className="hcmd">play breakout</span><span className="hdesc">brick breaker, 3 lives</span></div>
-            <div className="hrow"><span className="hcmd">play 2048</span><span className="hdesc">merge tiles, charge the phosphor</span></div>
-            <div className="hrow"><span className="hcmd">play type</span><span className="hdesc">typing speed test</span></div>
+            <div className="hrow"><span className="hcmd">play snake</span><span className="hdesc">snake ii on a nokia 3310 lcd</span></div>
+            <div className="hrow"><span className="hcmd">play tetris</span><span className="hdesc">game boy dmg, four shades of green</span></div>
+            <div className="hrow"><span className="hcmd">play pong</span><span className="hdesc">1972, first to 7 vs the machine</span></div>
+            <div className="hrow"><span className="hcmd">play breakout</span><span className="hdesc">atari 2600, rainbow wall, 3 lives</span></div>
+            <div className="hrow"><span className="hcmd">play 2048</span><span className="hdesc">merge tiles cool teal to hot magenta</span></div>
+            <div className="hrow"><span className="hcmd">play type</span><span className="hdesc">teletype speed test on paper</span></div>
             <div className="hrow"><span className="hcmd">play guess</span><span className="hdesc">number guessing game</span></div>
           </div>
         ) });

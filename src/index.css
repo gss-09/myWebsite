@@ -394,65 +394,137 @@ html.light .cli-line.err{color:#c0392b}
   transition:width 1.1s cubic-bezier(.2,.9,.2,1)}
 .skpct{width:28px;color:var(--dim);font-size:12px;flex:none;text-align:right}
 
-/* ---- games: shared chrome ---- */
+/* ---- games: each cabinet ships its own hardware palette, deliberately
+   independent of the terminal theme — little machines inside the crt ---- */
 .cli-app{margin-top:10px;animation:revealup .3s ease both}
 .game{display:flex;flex-direction:column;gap:10px}
-.game-hud{display:flex;align-items:center;gap:16px;font-size:12px;letter-spacing:.05em;
-  color:var(--dim);border-bottom:1px dashed var(--line);padding-bottom:7px}
-.g-title{color:var(--amber);text-shadow:var(--txt-glow);font-weight:600}
-.g-score{color:var(--green);text-shadow:var(--glow-green)}
+.game-hud{display:flex;align-items:center;flex-wrap:wrap;gap:4px 16px;font-size:12px;
+  letter-spacing:.05em;color:var(--dim);border-bottom:1px dashed var(--line);padding-bottom:7px}
+.game-hud span{white-space:nowrap}
+.g-title{font-weight:600;color:var(--fg)}
+.g-score{color:var(--fg)}
 .g-keys{margin-left:auto;opacity:.7}
-.game-stage{position:relative;align-self:flex-start;border:1px solid var(--line);
-  border-radius:6px;overflow:hidden;background:rgba(0,0,0,.28)}
+.game-stage{position:relative;align-self:flex-start;overflow:hidden}
 .snake-canvas,.game-canvas{display:block}
 .game-veil{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:8px;background:rgba(6,8,7,.72);backdrop-filter:blur(2px);
-  color:var(--amber);letter-spacing:.12em;font-weight:600;animation:revealup .25s ease both}
-.game-veil.over .go-title{font-size:26px;text-shadow:var(--glow-amber-strong)}
-.go-score{color:var(--green);letter-spacing:.08em}
-.go-hint{color:var(--dim);font-size:12px;letter-spacing:.04em;font-weight:400}
+  justify-content:center;gap:8px;background:rgba(6,8,7,.78);
+  color:#eee;letter-spacing:.12em;font-weight:600;animation:revealup .25s ease both;z-index:2}
+.game-veil.over .go-title{font-size:26px}
+.go-score{letter-spacing:.08em;opacity:.9}
+.go-hint{font-size:12px;letter-spacing:.04em;font-weight:400;opacity:.6}
 
-/* ---- typing test ---- */
-.type-test{max-width:620px}
-.type-target{font-size:18px;line-height:1.9;letter-spacing:.03em;color:var(--dim);
-  padding:6px 0;user-select:none}
-.type-target .tc.ok{color:var(--green);text-shadow:var(--glow-green)}
-.type-target .tc.bad{color:#ff6f6f;background:rgba(255,90,90,.14);border-radius:2px}
-.type-target .tc.cursor{color:var(--bright);text-shadow:var(--txt-glow);border-radius:2px;
-  box-shadow:inset 0 -2px 0 var(--amber);animation:curpulse 1s steps(1) infinite}
-@keyframes curpulse{50%{background:color-mix(in srgb,var(--amber) 22%,transparent)}}
+/* title card — shown before first play, colored by the cabinet */
+.title-card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:12px;z-index:3;animation:revealup .25s ease both}
+.tc-art{font-size:13px;line-height:1.25;white-space:pre;font-family:inherit;font-weight:700}
+.tc-big{font-size:40px;font-weight:800;letter-spacing:.08em}
+.tc-tag{font-size:11px;letter-spacing:.16em;opacity:.75;text-transform:uppercase}
+.tc-best{font-size:11px;letter-spacing:.1em;opacity:.55}
+.tc-press{font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  animation:tcblink 1.1s steps(1) infinite}
+@keyframes tcblink{50%{opacity:.15}}
+
+/* -- snake: nokia 3310 -- */
+.cab-nokia .g-title{color:#aebd96}
+.cab-nokia .g-score{color:#8a967a}
+.cab-nokia .game-stage{background:#39424e;padding:12px;border-radius:16px;
+  border:1px solid #20262e;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.cab-nokia .snake-canvas{border-radius:5px}
+.cab-nokia .game-veil,.cab-nokia .title-card{background:#9ead86;color:#26301c;
+  left:12px;right:12px;top:12px;bottom:12px;border-radius:5px}
+.cab-nokia .go-hint,.cab-nokia .tc-tag{color:#46523a}
+
+/* -- tetris: game boy dmg -- */
+.cab-gb .g-title{color:#8bac0f}
+.cab-gb .g-score{color:#6f8a20}
+.cab-gb .game-stage{background:#b6b2a8;padding:26px 16px 22px;
+  border-radius:10px 10px 42px 10px;border:1px solid #86827a}
+.cab-gb .gb-caption{position:absolute;top:8px;left:0;right:0;text-align:center;
+  font-size:8px;letter-spacing:.24em;color:#565a86;font-weight:700}
+.cab-gb .game-canvas{border:10px solid #3a3a44;border-radius:8px;background:#9bbc0f}
+.cab-gb .game-veil,.cab-gb .title-card{background:rgba(15,56,15,.94);color:#9bbc0f;
+  left:26px;right:26px;top:36px;bottom:32px;border-radius:8px}
+.cab-gb .go-hint,.cab-gb .tc-tag{color:#8bac0f}
+
+/* -- pong: 1972 -- */
+.cab-pong .g-title,.cab-pong .g-score{color:#f4f4f4}
+.cab-pong .game-stage{background:#000;border:2px solid #2a2a2a}
+.cab-pong .game-veil,.cab-pong .title-card{background:rgba(0,0,0,.9);color:#f4f4f4}
+
+/* -- breakout: atari 2600 rainbow -- */
+.cab-atari .g-title{background:linear-gradient(90deg,#c84848,#c66c3a,#a2a22a,#48a048);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.cab-atari .g-score{color:#c66c3a}
+.cab-atari .game-stage{background:#000;border:6px solid #2c2620;border-radius:4px}
+.cab-atari .game-veil,.cab-atari .title-card{background:rgba(0,0,0,.9);color:#ececec}
+.cab-atari .tc-art{background:linear-gradient(180deg,#c84848,#c66c3a 35%,#a2a22a 65%,#48a048);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* -- 2048: heat ramp -- */
+.cab-2048 .g-title{color:#57c8be}
+.cab-2048 .g-score{color:#e08a3c}
+.cab-2048 .game-stage{background:#0c1120;border:1px solid #1d2742;border-radius:8px}
+.cab-2048 .game-veil,.cab-2048 .title-card{background:rgba(10,14,28,.92);color:#e8ecf6}
+.cab-2048 .tc-big{background:linear-gradient(90deg,#2aa7a0,#7cc63e,#e0b03c,#e05c2a,#d818a8);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---- typing test: teletype paper ---- */
+.type-test{max-width:660px}
+.cab-tty .g-title{color:#c9b98a}
+.cab-tty .g-score{color:#a89868}
+.tty-paper{position:relative;background:#efe6d0;color:#2a2419;padding:24px 28px;min-height:120px;
+  max-width:640px;border-radius:2px;box-shadow:0 2px 0 #c8bda2,0 12px 26px rgba(0,0,0,.4);
+  background-image:repeating-linear-gradient(0deg,transparent 0 30px,rgba(90,70,40,.09) 30px 31px)}
+.cab-tty .title-card{position:static;color:#2a2419;padding:8px 0}
+.cab-tty .tc-big{letter-spacing:.3em;font-size:26px;border-top:2px solid #2a2419;
+  border-bottom:2px solid #2a2419;padding:6px 4px}
+.type-target{font-size:18px;line-height:1.9;letter-spacing:.03em;color:#b3a88e;user-select:none}
+.type-target .tc.ok{color:#2a2419;font-weight:600}
+.type-target .tc.bad{color:#a83232;background:rgba(168,50,50,.14);text-decoration:line-through;
+  border-radius:2px}
+.type-target .tc.cursor{color:#efe6d0;background:#2a2419;border-radius:1px;
+  animation:carriage .9s steps(1) infinite}
+@keyframes carriage{50%{background:transparent;color:#2a2419}}
 .type-input{position:absolute;left:-9999px;opacity:0}
-.type-result{display:flex;gap:20px;align-items:center;margin-top:4px;color:var(--fg)}
-.type-result b{color:var(--amber);text-shadow:var(--txt-glow);font-size:17px}
+.type-result{display:flex;gap:20px;align-items:center;margin-top:14px;padding-top:10px;
+  border-top:1px dashed #b3a88e;color:#5a5040}
+.type-result b{color:#2a2419;font-size:17px}
+.type-result .dim{color:#8a7f66}
+.tty-stamp{border:2px solid #a83232;color:#a83232;font-weight:700;font-size:11px;
+  letter-spacing:.14em;padding:2px 8px;border-radius:3px;transform:rotate(-5deg)}
 
-/* ---- 2048: tiles charge up the phosphor as they merge ---- */
+/* ---- 2048 board: cool teal -> hot magenta as tiles double ---- */
 .b2048{padding:10px}
 .board2048{position:relative;display:grid;grid-template-columns:repeat(4,64px);grid-auto-rows:64px;gap:7px}
-.bcell2048{border:1px solid var(--line);border-radius:6px;background:rgba(255,255,255,.035)}
+.bcell2048{border:1px solid #1d2742;border-radius:6px;background:rgba(90,130,220,.05)}
 /* outer div slides (transition on translate), inner div pops (scale keyframes) —
    split so the two transforms never fight */
 .tile2048{position:absolute;top:0;left:0;width:64px;height:64px;
   transition:transform .11s cubic-bezier(.25,.6,.3,1);will-change:transform}
 .tile2048 .tin{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-  font-weight:700;font-size:21px;border-radius:6px;color:var(--bright);
-  font-variant-numeric:tabular-nums;border:1px solid color-mix(in srgb,var(--amber) 16%,var(--line))}
+  font-weight:700;font-size:21px;border-radius:6px;
+  font-variant-numeric:tabular-nums;border:1px solid rgba(255,255,255,.08)}
 .tin.pop{animation:tilepop .15s cubic-bezier(.3,1.4,.5,1)}
 @keyframes tilepop{from{transform:scale(.4)}}
-.t2{background:color-mix(in srgb,var(--amber) 10%,transparent)}
-.t4{background:color-mix(in srgb,var(--amber) 16%,transparent)}
-.t8{background:color-mix(in srgb,var(--amber) 24%,transparent);text-shadow:var(--txt-glow)}
-.t16{background:color-mix(in srgb,var(--amber) 32%,transparent);text-shadow:var(--txt-glow)}
-.t32{background:color-mix(in srgb,var(--amber) 42%,transparent);text-shadow:var(--txt-glow)}
-.t64{background:color-mix(in srgb,var(--amber) 52%,transparent);color:var(--screen-bg)}
-.t128{background:color-mix(in srgb,var(--amber) 64%,transparent);color:var(--screen-bg);font-size:19px}
-.t256{background:color-mix(in srgb,var(--amber) 76%,transparent);color:var(--screen-bg);font-size:19px}
-.t512{background:color-mix(in srgb,var(--amber) 88%,transparent);color:var(--screen-bg);font-size:19px;
-  box-shadow:0 0 12px color-mix(in srgb,var(--amber) 60%,transparent)}
-.t1024{background:var(--amber);color:var(--screen-bg);font-size:17px;
-  box-shadow:0 0 16px color-mix(in srgb,var(--amber) 70%,transparent)}
-.tmax{background:var(--amber);color:var(--screen-bg);font-size:17px;animation:maxglow 1.1s ease infinite alternate}
-@keyframes maxglow{from{box-shadow:0 0 14px color-mix(in srgb,var(--amber) 70%,transparent)}
-  to{box-shadow:0 0 30px var(--amber)}}
+.t2{background:#123b3f;color:#8fd8d0}
+.t4{background:#14555a;color:#aef0e6}
+.t8{background:#0f6f6a;color:#d2fff4}
+.t16{background:#1a8a5c;color:#e2ffe9}
+.t32{background:#3aa03a;color:#f0ffe0}
+.t64{background:#7ba62b;color:#fbffd8}
+.t128{background:#c2a728;color:#fff8d0;font-size:19px}
+.t256{background:#d88a26;color:#fff3dd;font-size:19px}
+.t512{background:#e05c2a;color:#ffe9de;font-size:19px;box-shadow:0 0 12px rgba(224,92,42,.5)}
+.t1024{background:#e03050;color:#ffdde6;font-size:17px;box-shadow:0 0 16px rgba(224,48,80,.55)}
+.tmax{background:#d818a8;color:#fff;font-size:17px;animation:maxglow 1.1s ease infinite alternate}
+@keyframes maxglow{from{box-shadow:0 0 14px rgba(216,24,168,.7)}
+  to{box-shadow:0 0 30px #d818a8}}
+/* floating "+n" merge marker — `translate` animates on its own axis so it
+   composes with the positioning transform instead of fighting it */
+.wisp2048{position:absolute;top:0;left:0;width:64px;height:64px;display:flex;
+  align-items:center;justify-content:center;pointer-events:none;font-weight:700;
+  font-size:15px;color:#ffe9c8;animation:wisprise .6s ease-out both}
+@keyframes wisprise{from{opacity:.95;translate:0 0}to{opacity:0;translate:0 -30px}}
 
 /* matrix easter egg */
 .matrix-canvas{position:absolute;inset:0;z-index:12;width:100%;height:100%;pointer-events:none}
