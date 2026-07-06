@@ -174,8 +174,7 @@ export default function Tetris({ onExit }) {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let cell = 18;
     const fit = () => {
-      const stage = canvas.parentElement;
-      const w = (stage?.parentElement?.clientWidth || (COLS + PANEL) * 18) - 60;
+      const w = (canvas.closest(".game")?.clientWidth || (COLS + PANEL) * 18) - 60;
       const scroller = canvas.closest(".crt-scroll, .cli.standalone");
       const availH = (scroller?.clientHeight || window.innerHeight) - 190;
       cell = Math.min(w / (COLS + PANEL), Math.max(240, availH) / ROWS);
@@ -313,18 +312,21 @@ export default function Tetris({ onExit }) {
       </div>
       <div className="game-stage">
         <div className="gb-caption">DOT MATRIX WITH STEREO SOUND</div>
-        <canvas ref={canvasRef} className="game-canvas" />
-        {phase === "title" && (
-          <TitleCard art={ART} tagline="game boy dmg · stack clean, clear four" best={best} />
-        )}
-        {paused && !over && <div className="game-veil">PAUSED</div>}
-        {over && (
-          <div className="game-veil over">
-            <div className="go-title">GAME OVER</div>
-            <div className="go-score">score · {score} &nbsp;·&nbsp; lines · {lines}{newBest ? " — NEW BEST!" : ""}</div>
-            <div className="go-hint">[enter] play again &nbsp;·&nbsp; [esc] quit</div>
-          </div>
-        )}
+        {/* screen wrapper owns the bezel border so overlays align exactly */}
+        <div className="gb-screen">
+          <canvas ref={canvasRef} className="game-canvas" />
+          {phase === "title" && (
+            <TitleCard art={ART} tagline="game boy dmg · stack clean, clear four" best={best} />
+          )}
+          {paused && !over && <div className="game-veil">PAUSED</div>}
+          {over && (
+            <div className="game-veil over">
+              <div className="go-title">GAME OVER</div>
+              <div className="go-score">score · {score} &nbsp;·&nbsp; lines · {lines}{newBest ? " — NEW BEST!" : ""}</div>
+              <div className="go-hint">[enter] play again &nbsp;·&nbsp; [esc] quit</div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

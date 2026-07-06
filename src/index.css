@@ -441,9 +441,12 @@ html.light .cli-line.err{color:#c0392b}
   border-radius:10px 10px 42px 10px;border:1px solid #86827a}
 .cab-gb .gb-caption{position:absolute;top:8px;left:0;right:0;text-align:center;
   font-size:8px;letter-spacing:.24em;color:#565a86;font-weight:700}
-.cab-gb .game-canvas{border:10px solid #3a3a44;border-radius:8px;background:#9bbc0f}
+/* the screen wrapper owns bezel + radius; overlays fill it, so they line up
+   with the lcd exactly at any canvas size */
+.cab-gb .gb-screen{position:relative;line-height:0;border:10px solid #3a3a44;
+  border-radius:8px;background:#9bbc0f;overflow:hidden}
 .cab-gb .game-veil,.cab-gb .title-card{background:rgba(15,56,15,.94);color:#9bbc0f;
-  left:26px;right:26px;top:36px;bottom:32px;border-radius:8px}
+  line-height:normal}
 .cab-gb .go-hint,.cab-gb .tc-tag{color:#8bac0f}
 
 /* -- pong: 1972 -- */
