@@ -26,6 +26,10 @@ const SOCIALS = [
 ];
 
 const PROJECT_LINKS = {
+  college: "https://college-connect-demo.vercel.app",
+  "college-connect": "https://college-connect-demo.vercel.app",
+  ledger: "https://admissions-ledger-demo.vercel.app",
+  "admissions-ledger": "https://admissions-ledger-demo.vercel.app",
   medic: "https://devpost.com/software/medic-aids",
   "medic(aids)": "https://devpost.com/software/medic-aids",
   owlai: "https://devpost.com/software/owlai",
@@ -57,7 +61,7 @@ const HELP = [
     ["play guess", "number guessing game"],
   ]],
   ["links", [
-    ["open <name>", "medic · owlai · resume"],
+    ["open <name>", "college · ledger · medic · owlai · resume"],
     ["social", "github · linkedin · instagram"],
     ["email", "send me a mail"],
   ]],
@@ -309,7 +313,7 @@ export default function Cli({ actions, inputId = "cli-input", standalone = false
           actions.openLink(url);
           print({ k: "out", c: `opening ${key} ↗`, typed: true });
         } else {
-          print({ k: "err", c: `no link for '${args[0] || ""}'. try: open medic | owlai | resume` });
+          print({ k: "err", c: `no link for '${args[0] || ""}'. try: open college | ledger | medic | owlai | resume` });
         }
         break;
       }

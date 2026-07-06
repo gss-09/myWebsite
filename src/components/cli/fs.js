@@ -83,9 +83,42 @@ responses.`
   }),
 
   projects: D({
+    "college-connect.md": F(
+`# college-connect                      2026.07
+commit 9c2f1e8  (HEAD → main, tag: client)
+--------------------------------------------------
+Multi-campus college administration platform,
+custom-built to a real client's requirements —
+RUNNING IN PRODUCTION at a college in India with
+2,000–3,000 students. Hostel beds, exams & marks
+(Excel import/export), maintenance tickets, parent
+portal, per-module permissions + full audit log.
+Public repo is a sanitized fork, fictional data.
+
+stack   python · flask · postgres · vanilla-js
+remote  github.com/gss-09/college-connect-demo
+live    college-connect-demo.vercel.app
+        ( run 'open college' to launch )`
+    ),
+    "admissions-ledger.md": F(
+`# admissions-ledger                    2026.07
+commit 7d48b2a  (tag: client)
+--------------------------------------------------
+Recruiting & revenue analytics for the same client —
+tracks 1,400+ real applicants in production through
+the admissions funnel: per-recruiter conversion, fee
+analytics, true cost-per-admission. Role-scoped to
+the field level — PII/fee columns stripped
+server-side per role.
+
+stack   python · flask · postgres · vanilla-js
+remote  github.com/gss-09/admissions-ledger-demo
+live    admissions-ledger-demo.vercel.app
+        ( run 'open ledger' to launch )`
+    ),
     "medic-aids.md": F(
 `# medic(aids)                          2026.01
-commit a1f76c4  (HEAD → main, tag: hackathon)
+commit a1f76c4  (tag: hackathon)
 --------------------------------------------------
 Predicts AIDS treatment outcomes at 76.4% accuracy
 from only CD4/CD8 counts — ML classification +

@@ -3,6 +3,28 @@ import SectionHeading from "./SectionHeading";
 
 const projects = [
   {
+    name: "College Connect",
+    description:
+      "Multi-campus college administration platform, custom-built to a real client's requirements and running in production at a college in India with 2,000–3,000 students. Handles hostel bed management, exams & marks with Excel import/export, maintenance ticketing, a read-only parent portal, and per-module permissions with campus-level scoping and a full audit trail — one system replacing spreadsheets and paper registers, used daily by staff and parents. The public demo is a sanitized fork seeded with fictional data.",
+    tech: ["Python", "Flask", "PostgreSQL", "Vanilla JS", "Vercel"],
+    links: [
+      { label: "GitHub ↗", href: "https://github.com/gss-09/college-connect-demo" },
+      { label: "Live demo ↗", href: "https://college-connect-demo.vercel.app" },
+    ],
+    accent: "rgba(52, 211, 153, 0.35)",
+  },
+  {
+    name: "Admissions Ledger",
+    description:
+      "Recruiting & revenue analytics built for the same client — in production it tracks 1,400+ real applicants through the admissions funnel, with per-recruiter conversion, fee analytics, and true cost-per-admission reporting. Access is role-scoped down to the field level: PII and fee columns are stripped server-side per role, and city-bound users only ever receive their own rows.",
+    tech: ["Python", "Flask", "PostgreSQL", "Vanilla JS", "Vercel"],
+    links: [
+      { label: "GitHub ↗", href: "https://github.com/gss-09/admissions-ledger-demo" },
+      { label: "Live demo ↗", href: "https://admissions-ledger-demo.vercel.app" },
+    ],
+    accent: "rgba(251, 113, 133, 0.35)",
+  },
+  {
     name: "MEDIC(AIDS)",
     description:
       "Predicts AIDS treatment outcomes with 76.4% accuracy using only CD4 and CD8 immune cell counts — affordable markers available anywhere. Combines ML classification with Kaplan-Meier survival analysis to identify high-risk patients. Independently validated drug resistance findings from the original 1996 clinical trial (p < 0.0001).",
@@ -61,19 +83,22 @@ function ProjectCard({ project }) {
       <div className="relative">
         <div className="flex items-start justify-between gap-4 mb-3">
           <h3 className="text-lg sm:text-xl font-semibold">{project.name}</h3>
-          {project.link && (
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-shrink-0 text-sm font-medium px-3 py-1 rounded-md
-                border border-gray-400 dark:border-gray-500
-                hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black
-                transition-colors duration-200"
-            >
-              Devpost ↗
-            </a>
-          )}
+          <div className="flex flex-shrink-0 flex-wrap justify-end gap-2">
+            {(project.links || (project.link ? [{ label: "Devpost ↗", href: project.link }] : [])).map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium px-3 py-1 rounded-md
+                  border border-gray-400 dark:border-gray-500
+                  hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black
+                  transition-colors duration-200"
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
         </div>
         <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
           {project.description}

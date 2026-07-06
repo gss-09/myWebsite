@@ -2,8 +2,46 @@ import { lines } from "./lines";
 
 const projects = [
   {
+    hash: "9c2f1e8",
+    ref: "(HEAD → main, tag: client)",
+    name: "college-connect",
+    date: "2026.07",
+    body: (
+      <>
+        Multi-campus college administration platform, custom-built to a real
+        client's requirements — <span className="amber">running in production
+        at a college in India with 2,000–3,000 students</span>. Hostel bed
+        management, exams &amp; marks with Excel import/export, maintenance
+        ticketing, a parent portal, per-module permissions with campus-level
+        scoping and a full audit log. Public repo is a sanitized fork seeded
+        with fictional data.
+      </>
+    ),
+    remote: "https://github.com/gss-09/college-connect-demo",
+    live: "https://college-connect-demo.vercel.app",
+    tags: ["python", "flask", "postgres", "vanilla-js"],
+  },
+  {
+    hash: "7d48b2a",
+    ref: "(tag: client)",
+    name: "admissions-ledger",
+    date: "2026.07",
+    body: (
+      <>
+        Recruiting &amp; revenue analytics for the same client — tracks{" "}
+        <span className="amber">1,400+ real applicants in production</span>{" "}
+        through the admissions funnel: per-recruiter conversion, fee analytics,
+        true cost-per-admission. Role-scoped to the field level — PII and fee
+        columns are stripped server-side per role.
+      </>
+    ),
+    remote: "https://github.com/gss-09/admissions-ledger-demo",
+    live: "https://admissions-ledger-demo.vercel.app",
+    tags: ["python", "flask", "postgres", "vanilla-js"],
+  },
+  {
     hash: "a1f76c4",
-    ref: "(HEAD → main, tag: hackathon)",
+    ref: "(tag: hackathon)",
     name: "medic(aids)",
     date: "2026.01",
     body: (
@@ -45,7 +83,7 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section className="section" id="projects" data-lines={lines(26)}>
+    <section className="section" id="projects" data-lines={lines(44)}>
       <div className="ps1">
         <b>shriyans</b>@<b>portfolio</b> <span className="amber">~</span>
       </div>
@@ -67,6 +105,14 @@ export default function Projects() {
                 <span className="dim">remote:</span>{" "}
                 <a href={p.remote} target="_blank" rel="noopener noreferrer">
                   {p.remote.replace("https://", "")} ↗
+                </a>
+              </div>
+            )}
+            {p.live && (
+              <div className="remote">
+                <span className="dim">live:</span>{" "}
+                <a href={p.live} target="_blank" rel="noopener noreferrer">
+                  {p.live.replace("https://", "")} ↗
                 </a>
               </div>
             )}
