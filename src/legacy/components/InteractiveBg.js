@@ -204,13 +204,14 @@ export default function InteractiveBg() {
       if (mx > -1000) {
         const glowR = INFLUENCE * 1.2;
         const glow = ctx.createRadialGradient(mx, my, 0, mx, my, glowR);
+        // neutral monochrome glow — white on dark, black on light
         if (dark) {
-          glow.addColorStop(0, "rgba(168, 85, 247, 0.22)");
-          glow.addColorStop(0.45, "rgba(56, 189, 248, 0.06)");
-          glow.addColorStop(1, "rgba(0, 0, 0, 0)");
+          glow.addColorStop(0, "rgba(255, 255, 255, 0.14)");
+          glow.addColorStop(0.45, "rgba(255, 255, 255, 0.04)");
+          glow.addColorStop(1, "rgba(255, 255, 255, 0)");
         } else {
-          glow.addColorStop(0, "rgba(168, 85, 247, 0.14)");
-          glow.addColorStop(0.45, "rgba(56, 189, 248, 0.04)");
+          glow.addColorStop(0, "rgba(0, 0, 0, 0.10)");
+          glow.addColorStop(0.45, "rgba(0, 0, 0, 0.03)");
           glow.addColorStop(1, "rgba(0, 0, 0, 0)");
         }
         ctx.fillStyle = glow;

@@ -7,7 +7,6 @@ import Contact from "./components/Contact";
 import CustomCursor from "./components/CustomCursor";
 import FadeIn from "./components/FadeIn";
 import ScrollProgress from "./components/ScrollProgress";
-import Aurora from "./components/Aurora";
 import InteractiveBg from "./components/InteractiveBg";
 import Intro from "./components/Intro";
 import "./legacy.css";
@@ -21,7 +20,6 @@ function LegacyApp() {
       <CustomCursor />
       <ScrollProgress />
       <div className="bg-fade fixed inset-0 -z-10"></div>
-      <Aurora />
       <InteractiveBg />
       <div className="noise" aria-hidden />
       <div className="vignette" aria-hidden />

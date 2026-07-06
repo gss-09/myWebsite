@@ -11,7 +11,7 @@ const projects = [
       { label: "GitHub ↗", href: "https://github.com/gss-09/college-connect-demo" },
       { label: "Live demo ↗", href: "https://college-connect-demo.vercel.app" },
     ],
-    accent: "rgba(52, 211, 153, 0.35)",
+    accent: "rgba(150, 150, 150, 0.28)",
   },
   {
     name: "Admissions Ledger",
@@ -22,7 +22,7 @@ const projects = [
       { label: "GitHub ↗", href: "https://github.com/gss-09/admissions-ledger-demo" },
       { label: "Live demo ↗", href: "https://admissions-ledger-demo.vercel.app" },
     ],
-    accent: "rgba(251, 113, 133, 0.35)",
+    accent: "rgba(150, 150, 150, 0.28)",
   },
   {
     name: "MEDIC(AIDS)",
@@ -30,7 +30,7 @@ const projects = [
       "Predicts AIDS treatment outcomes with 76.4% accuracy using only CD4 and CD8 immune cell counts — affordable markers available anywhere. Combines ML classification with Kaplan-Meier survival analysis to identify high-risk patients. Independently validated drug resistance findings from the original 1996 clinical trial (p < 0.0001).",
     tech: ["Python", "Random Forest", "Survival Analysis", "scikit-learn", "Pandas"],
     link: "https://devpost.com/software/medic-aids",
-    accent: "rgba(56, 189, 248, 0.35)",
+    accent: "rgba(150, 150, 150, 0.28)",
   },
   {
     name: "Watt Warriors",
@@ -38,7 +38,7 @@ const projects = [
       "ML-based plastic-waste detection that placed 3rd ($1,500) at the Coogs for Energy Hackathon. Built a supervised computer-vision classifier on labeled RGB images, architected for future RGB + NIR sensor fusion.",
     tech: ["Python", "Computer Vision", "Image Classification", "scikit-learn"],
     link: null,
-    accent: "rgba(245, 158, 11, 0.35)",
+    accent: "rgba(150, 150, 150, 0.28)",
   },
   {
     name: "Owlai",
@@ -46,7 +46,7 @@ const projects = [
       "AI study assistant built in 36 hours at Rice Hackathon — chat-based Q&A on any subject, a dynamic quiz/exam generator, and a Gemini-powered voice tutor for natural, step-by-step concept explanations. Python + MongoDB backend.",
     tech: ["React", "Python", "Gemini", "MongoDB", "Flask"],
     link: "https://devpost.com/software/owlai",
-    accent: "rgba(168, 85, 247, 0.35)",
+    accent: "rgba(150, 150, 150, 0.28)",
   },
 ];
 

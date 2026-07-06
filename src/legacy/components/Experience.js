@@ -2,22 +2,16 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 
+// monochrome — every type shares the same neutral gray treatment
+const NEUTRAL_STYLE = {
+  pill: "bg-gray-500/15 text-gray-700 dark:text-gray-200 border-gray-400/40",
+  dot: "bg-gray-500 dark:bg-gray-400",
+  glow: "shadow-[0_0_12px_3px_rgba(120,120,120,0.4)]",
+};
 const TYPE_STYLES = {
-  Research: {
-    pill: "bg-purple-500/20 text-purple-700 dark:text-purple-200 border-purple-500/40",
-    dot: "bg-purple-500",
-    glow: "shadow-[0_0_12px_3px_rgba(168,85,247,0.5)]",
-  },
-  Work: {
-    pill: "bg-sky-500/20 text-sky-700 dark:text-sky-200 border-sky-500/40",
-    dot: "bg-sky-500",
-    glow: "shadow-[0_0_12px_3px_rgba(14,165,233,0.5)]",
-  },
-  Leadership: {
-    pill: "bg-amber-500/20 text-amber-700 dark:text-amber-200 border-amber-500/40",
-    dot: "bg-amber-500",
-    glow: "shadow-[0_0_12px_3px_rgba(245,158,11,0.5)]",
-  },
+  Research: NEUTRAL_STYLE,
+  Work: NEUTRAL_STYLE,
+  Leadership: NEUTRAL_STYLE,
 };
 
 const experiences = [

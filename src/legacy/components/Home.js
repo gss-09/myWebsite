@@ -1,5 +1,4 @@
 import React from "react";
-import SkillsMarquee from "./SkillsMarquee";
 
 function Home() {
   return (
@@ -20,30 +19,20 @@ function Home() {
               alt="Shriyans Sai"
               className="relative w-36 h-48 sm:w-44 sm:h-56 rounded-2xl object-cover shadow-xl
                 border border-gray-200 dark:border-white/10
-                ring-1 ring-amber-500/30"
+                ring-1 ring-gray-400/30 dark:ring-white/15"
             />
           </div>
           <div className="text-center sm:text-left flex-1">
             <div className="text-xs font-mono tracking-[0.25em] uppercase text-gray-500 dark:text-gray-400 mb-2">
               Hello world
             </div>
-            <h1 className="text-3xl sm:text-5xl font-extrabold mb-3 leading-tight text-gray-900 dark:text-white">
+            <h1 className="text-3xl sm:text-5xl font-extrabold mb-4 leading-tight text-gray-900 dark:text-white">
               I'm Shriyans Sai
             </h1>
-            <div className="text-lg sm:text-2xl mb-4 font-medium text-gray-700 dark:text-gray-300">
-              <span className="text-amber-600 dark:text-amber-400 font-semibold">AI / ML researcher</span>
-              <span className="mx-2 text-gray-400 dark:text-gray-600">·</span>
-              full-stack engineer
-            </div>
             <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
               CS Junior at the University of Houston &mdash; building things at the intersection of AI, machine learning, and software engineering.
             </p>
           </div>
-        </div>
-
-        {/* Skills marquee */}
-        <div className="mb-14">
-          <SkillsMarquee />
         </div>
 
         {/* About */}
