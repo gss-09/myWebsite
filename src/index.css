@@ -187,9 +187,9 @@ html.light .screen .curve{background:radial-gradient(112% 112% at 50% 50%,transp
 /* when off, show a faint "standby" message centered on the dark glass */
 .screen.is-off,html.light .screen.is-off{background:#060807}
 .standby{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;
-  color:#5a615a;font-size:13px;letter-spacing:.18em;opacity:0;pointer-events:none}
-.screen.is-off .standby{opacity:.45;transition:opacity .4s ease .5s;animation:standby-blink 2s ease-in-out .9s infinite}
-@keyframes standby-blink{0%,100%{opacity:.45}50%{opacity:.12}}
+  color:#8a938a;font-size:13px;letter-spacing:.18em;opacity:0;pointer-events:none}
+.screen.is-off .standby{opacity:.75;transition:opacity .4s ease .5s;animation:standby-blink 2s ease-in-out .9s infinite}
+@keyframes standby-blink{0%,100%{opacity:.75}50%{opacity:.3}}
 .led.dead{background:radial-gradient(circle at 35% 30%,#8c8c8c,#4a4a4a 60%,#2a2a2a);
   box-shadow:inset 0 -1px 2px rgba(0,0,0,.5);animation:none}
 .pwr{position:relative;width:36px;height:23px;border-radius:5px;display:flex;align-items:center;justify-content:center;
