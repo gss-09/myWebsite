@@ -153,7 +153,7 @@ function App() {
               <div className="scan" />
               <div className="glare" />
               {matrix && <MatrixRain />}
-              <div className="standby">STANDBY</div>
+              <div className="standby">Turn on the power button</div>
 
               <div
                 className={on ? "tube on" : interacted ? "tube off" : "tube off-static"}
